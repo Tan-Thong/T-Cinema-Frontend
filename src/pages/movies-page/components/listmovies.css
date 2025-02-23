@@ -1,0 +1,31 @@
+.list-movies {
+    background-color: #252422;
+    border-top: 1px solid #333;
+    padding: 50px 100px;
+}
+
+.list-movies .buttons{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.list-movies .buttons button {
+    height: 50px;
+    width: 200px;
+    border: 2px #aaa solid;
+    background-color: #efebdb;
+    letter-spacing: 3px;
+    font-family: Poppins;
+    font-weight: 800;
+}
+
+.list-movies .movies-wrapper {
+    padding: 30px;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px 24px;
+}

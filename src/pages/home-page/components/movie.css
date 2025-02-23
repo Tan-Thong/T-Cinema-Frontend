@@ -1,0 +1,59 @@
+.grade_18 {
+    display: block;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    text-align: center;
+    line-height: 24px;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #c60672;
+    border-radius: 50%;
+    padding-right: 2px;
+    padding-bottom: 2px;
+}
+
+.movie-item {
+    grid-column: span 1;
+    color: #000;
+}
+
+.movie-item .thumbnail {
+    border: 1px solid #333;
+    border-radius: 8px 8px 0 0;
+    width: 100%;
+}
+
+.info {
+    border: 1px solid #333;
+    background-color: #faf0ca;
+    /* background-color: #cdc197; */
+    height: 70px;
+    border-radius: 0 0 8px 8px;
+    
+}
+
+.title {
+    display: flex;
+    height: 55%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.title > p {
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.date {
+    display: flex;
+    height: 45%;
+    gap: 10px;
+    justify-content: center;
+    border-top: 1px solid #777;
+    color: #777;
+    font-size: 13px;
+    align-items: center;
+}
