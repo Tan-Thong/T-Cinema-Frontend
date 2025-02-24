@@ -1,5 +1,5 @@
 .banner {
-    width: 800px;
+    width: 850px;
     height: 450px;
 }
 
@@ -12,15 +12,113 @@
 }
 
 .blur-left {
-    transform: translateX(-130%);
+    transform: translateX(-140%);
 }
 
 .blur-right {
-    transform: translateX(130%);
+    transform: translateX(140%);
 }
 
-.detail-wrapper .thumbnail-wrapper img {
-    margin-top: -50px;
-    border: 2px solid #eee;
-    height: 400px;
+.movie-detail-content {
+    color: #252422;
+    background-color: #ffecd1;
+    display: grid;
+    padding: 30px 140px;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 30px;
 }
+
+.list-movie {
+    grid-column: span 2;
+    width: 100%;
+}
+
+.movie-detail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: span 5;
+    gap: 24px;
+    min-height: 300px;
+}
+
+.movie-detail > img {
+    grid-column: span 1;
+    width: 100%;
+    margin-top: -80px;
+    border: 2px solid #eee;
+    z-index: 10;
+}
+
+.movie-detail .detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    grid-column: span 2;
+}
+
+.movie-detail .desc {
+    margin-top: 50px;
+    text-align: justify;
+    grid-column: span 3;
+    font-size: 1.2em;
+}
+
+.movie-detail .desc .head .block {
+    height: 30px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: #f1683a;
+}
+
+.movie-detail .desc .head p {
+    font-weight: bold;
+    padding-left: 10px;
+    line-height: 30px;
+    font-size: 20px;
+}
+
+.detail-title p {
+    font-size: 2.6em;
+    font-weight: 500;
+    height: 35px;
+    line-height: 35px;
+}
+
+.detail-title .classify {
+    color: #cdc197;
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: bold;
+    text-align: center;
+    height: 30px;
+    width: 40px;
+    border-radius: 6px;
+    background-color: #252422;
+}
+
+.detail-section {
+    display: flex;
+    font-size: 1.2em;
+    gap: 30px;
+    align-items: center;
+}
+
+.datetime img {
+    width: 16px;
+    height: 16px;
+}
+
+.datetime .label {
+    margin-left: 3px;
+}
+
+.detail-section .label {
+    color: #777;
+}
+
+.detail-section .text {
+    color: #252422;
+}
+
+
+
