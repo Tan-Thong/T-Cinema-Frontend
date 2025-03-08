@@ -11,6 +11,7 @@
     border-radius: 50%;
     padding-right: 2px;
     padding-bottom: 2px;
+    
 }
 
 .movie-item {
@@ -21,16 +22,16 @@
 .movie-item .thumbnail {
     border: 1px solid #333;
     border-radius: 8px 8px 0 0;
+    height: auto;
     width: 100%;
+    object-fit: cover;
 }
 
 .info {
     border: 1px solid #333;
     background-color: #faf0ca;
-    /* background-color: #cdc197; */
     height: 70px;
     border-radius: 0 0 8px 8px;
-    
 }
 
 .title {

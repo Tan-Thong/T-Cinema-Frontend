@@ -1,0 +1,29 @@
+.list-movie-showing {
+    grid-column: span 2;
+    gap: 10px;
+}
+
+.list-movie-showing .movie-wrapper img {
+    width: 100%;
+}
+
+.list-movie-showing .movie-wrapper .movie-title {
+    font-size: 1.4em;
+    font-weight: 400;
+    margin-top: 8px;
+}
+
+.list-movie-showing .button {
+    display: block;
+    margin-left: auto;
+    width: 150px;
+    height: 40px;
+    line-height: 38px;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: 400;
+    color: #f1683a;
+    justify-content: start;
+    border: 1px #f1683a solid;
+    border-radius: 4px;
+}

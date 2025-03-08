@@ -1,3 +1,44 @@
+.detail-content {
+    background-color: #ffecd1;
+}
+
+.banner-wrapper {
+    position: relative;
+}
+
+.banner-wrapper .btn-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Nội dung Modal */
+.modal-content {
+    position: relative;
+    width: 80%;
+    height: 75%;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
 .banner {
     width: 850px;
     height: 450px;
@@ -20,17 +61,14 @@
 }
 
 .movie-detail-content {
+    width: 1250px;
+    min-height: 100%;
+    margin: 0 auto;
     color: #252422;
-    background-color: #ffecd1;
     display: grid;
-    padding: 30px 140px;
+    padding: 30px 0;
     grid-template-columns: repeat(7, 1fr);
     gap: 30px;
-}
-
-.list-movie {
-    grid-column: span 2;
-    width: 100%;
 }
 
 .movie-detail {
@@ -38,7 +76,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-column: span 5;
     gap: 24px;
-    min-height: 300px;
+    max-height: 550px;
 }
 
 .movie-detail > img {
@@ -52,36 +90,10 @@
 .movie-detail .detail {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    margin-top: 30px;
+    height: 100%;
+    gap: 20px;
     grid-column: span 2;
-}
-
-.movie-detail .desc {
-    margin-top: 50px;
-    text-align: justify;
-    grid-column: span 3;
-    font-size: 1.2em;
-}
-
-.movie-detail .desc .head .block {
-    height: 30px;
-    width: 4px;
-    border-radius: 2px;
-    background-color: #f1683a;
-}
-
-.movie-detail .desc .head p {
-    font-weight: bold;
-    padding-left: 10px;
-    line-height: 30px;
-    font-size: 20px;
-}
-
-.detail-title p {
-    font-size: 2.6em;
-    font-weight: 500;
-    height: 35px;
-    line-height: 35px;
 }
 
 .detail-title .classify {
@@ -120,5 +132,33 @@
     color: #252422;
 }
 
+.detail-schedule {
+    grid-column: span 5;
+    margin-top: -450px;
+}
 
+.detail-schedule .head .block {
+    height: 30px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: #f1683a;
+}
 
+.detail-schedule .head p {
+    font-weight: bold;
+    padding-left: 10px;
+    line-height: 30px;
+    font-size: 20px;
+}
+
+.detail-schedule .desc > p {
+    text-align: justify;
+    font-size: 1.3em;;
+}
+
+.detail-title p {
+    font-size: 2.6em;
+    font-weight: 500;
+    height: 35px;
+    line-height: 35px;
+}

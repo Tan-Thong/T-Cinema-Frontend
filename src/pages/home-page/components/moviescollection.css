@@ -3,8 +3,13 @@
     /* border: 1px solid #3e5c76; */
     /* background-color: #3e5c76; */
     padding: 30px;
-    padding: 50px 130px;
+    padding: 50px 0;
     background-color: #252422;
+}
+
+.movies-collection .action, .movies-wrapper {
+    width: 1250px;
+    margin: auto;
 }
 
 .movies-wrapper {

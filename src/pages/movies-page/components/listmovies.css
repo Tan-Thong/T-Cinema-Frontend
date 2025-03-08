@@ -22,7 +22,7 @@
 }
 
 .list-movies .movies-wrapper {
-    padding: 30px;
+    padding: 60px 30px;
     background-color: #1a1a1a;
     border-radius: 10px;
     display: grid;
