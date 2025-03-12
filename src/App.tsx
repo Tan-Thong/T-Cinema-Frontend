@@ -5,6 +5,7 @@ import MoviesPage from './pages/movies-page/MoviesPage';
 import DetailPage from './pages/detail-page/DetailPage';
 import Header from './pages/header-footer/header/Header';
 import Footer from './pages/header-footer/footer/Footer';
+import BookingPage from './pages/booking-page/BookingPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
           <Route path="/movies/:movieId" element={<DetailPage />} />
+          <Route path="/booking" element={<BookingPage />} />
         </Routes>
         <Footer />
       </div>

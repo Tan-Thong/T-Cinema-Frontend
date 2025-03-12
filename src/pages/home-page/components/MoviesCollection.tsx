@@ -32,7 +32,7 @@ function MoviesCollection() {
             <div className="movies-wrapper">
                 {
                     movies.map((movie) => (
-                        <Movie movie={movie}/>
+                        <Movie movie={movie} key={movie.movieId}/>
                     ))
                 }
             </div>

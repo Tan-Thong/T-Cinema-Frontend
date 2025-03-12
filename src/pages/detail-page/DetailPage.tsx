@@ -89,7 +89,8 @@ const DetailPage: React.FC = () => {
                 </div>
 
                 {/* List movies showing */}
-                <MoviesShowing />
+                <MoviesShowing movieId={movieIdNumber} />
+
                 <div className="detail-schedule">
                     <div className="desc">
                         <div className="head d-flex">
@@ -99,7 +100,7 @@ const DetailPage: React.FC = () => {
                         <p className="mt-3">{movie?.movieDescription}</p>
                     </div>
 
-                    <Schedule />
+                    <Schedule movieID={movieIdNumber} />
                 </div>
             </div>
 

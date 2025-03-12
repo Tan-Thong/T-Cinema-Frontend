@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./moviesshowing.css"
-import { findAll } from "../../../api/MovieAPI";
+import { findByIdNot } from "../../../api/MovieAPI";
 import MovieModel from "../../../models/MovieModel";
 
-function MoviesShowing() {
+interface MovieInterface {
+    movieId: number;
+};
+
+const MoviesShowing: React.FC<MovieInterface> = (props) => {
     const [movies, setMovies] = useState<MovieModel[]>([]);
 
     useEffect(() => {
-        findAll().then(
+        findByIdNot(props.movieId).then(
             movieData => {
                 setMovies(movieData);
             }
@@ -17,21 +21,41 @@ function MoviesShowing() {
     }, []);
     return (
         <div className="list-movie-showing">
-            <div className="movie-wrapper">
-                <img src={movies[0]?.bannerUrl} alt="" className="thumbnail" />
-                <p className="movie-title">{movies[0]?.title}</p>
-            </div>
+            <a href={`/movies/${movies[0]?.movieId}`}>
+                <div className="movie-wrapper">
+                    <div className="buy-ticket">
+                        <img src={movies[0]?.bannerUrl} alt="" className="thumbnail" />
+                        <div className="button">
+                            <div className="btn">Mua vé</div>
+                        </div>
+                    </div>
+                    <p className="movie-title">{movies[0]?.title}</p>
+                </div>
+            </a>
 
-            <div className="movie-wrapper">
-                <img src={movies[1]?.bannerUrl} alt="" className="thumbnail" />
-                <p className="movie-title">{movies[1]?.title}</p>
-            </div>
+            <a href={`/movies/${movies[1]?.movieId}`}>
+                <div className="movie-wrapper">
+                <div className="buy-ticket">
+                        <img src={movies[1]?.bannerUrl} alt="" className="thumbnail" />
+                        <div className="button">
+                            <div className="btn">Mua vé</div>
+                        </div>
+                    </div>
+                    <p className="movie-title">{movies[1]?.title}</p>
+                </div>
+            </a>
 
-            <div className="movie-wrapper">
-                <img src={movies[2]?.bannerUrl} alt="" className="thumbnail" />
-                <p className="movie-title">{movies[2]?.title}</p>
-            </div>
-
+            <a href={`/movies/${movies[2]?.movieId}`}>
+                <div className="movie-wrapper">
+                <div className="buy-ticket">
+                        <img src={movies[2]?.bannerUrl} alt="" className="thumbnail" />
+                        <div className="button">
+                            <div className="btn">Mua vé</div>
+                        </div>
+                    </div>
+                    <p className="movie-title">{movies[2]?.title}</p>
+                </div>
+            </a>
             <a className="button" href="/movies">Xem thêm</a>
         </div>
     )

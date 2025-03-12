@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./schedule.css"
+import Position from "./Position";
+import { findByMovieAndDay } from "../../../api/ShowtimeAPI";
+import ShowtimeModel from "../../../models/ShowtimeModel";
 
-const Schedule = () => {
+const Schedule = ({ movieID }: { movieID: number }) => {
+    const [showtimes, setShowtimes] = useState<ShowtimeModel[]>([]); // State lưu danh sách rạp chiếu phim
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        findByMovieAndDay(movieID).then(
+            showtimeData => {
+                setShowtimes(showtimeData);
+            }
+        )
+    }, [movieID]);
+
     return (
         <div className="schedule-wrapper">
             <div className="head d-flex">
@@ -29,77 +43,25 @@ const Schedule = () => {
                     </div>
                 </div>
 
-                <div className="position">
-                    <div className="form-floating">
-                        <select className="form-select" aria-label="Default select example">
-                            <option selected>Toàn quốc</option>
-                            <option value="1">TP Hồ Chí Minh</option>
-                            <option value="2">Hà Nội</option>
-                            <option value="3">Đà Nẵng</option>
-                        </select>
-                    </div>
-
-                    <div className="form-floating">
-                        <select className="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option selected>Toàn quốc</option>
-                            <option value="1">TP Hồ Chí Minh</option>
-                            <option value="2">Hà Nội</option>
-                            <option value="3">Đà Nẵng</option>
-                        </select>
-                    </div>
-                </div>
+                <Position />
             </div>
 
             <div className="list-cinemas">
-                <div className="cinema-item">
-                    <p className="name">T-Cinema Kinh Dương Vương</p>
-                    <div className="time-wrapper">
-                        <div className="room pe-5">2D Lồng tiếng</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                    </div>
-                </div>
-
-                <div className="cinema-item">
-                    <p className="name">T-Cinema Kinh Dương Vương</p>
-                    <div className="time-wrapper">
-                        <div className="room pe-5">2D Lồng tiếng</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                    </div>
-                </div>
-
-                <div className="cinema-item">
-                    <p className="name">T-Cinema Kinh Dương Vương</p>
-                    <div className="time-wrapper">
-                        <div className="room pe-5">2D Lồng tiếng</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                    </div>
-                </div>
-
-                <div className="cinema-item">
-                    <p className="name">T-Cinema Kinh Dương Vương</p>
-                    <div className="time-wrapper">
-                        <div className="room pe-5">2D Lồng tiếng</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                    </div>
-                </div>
-
-                <div className="cinema-item">
-                    <p className="name">T-Cinema Kinh Dương Vương</p>
-                    <div className="time-wrapper">
-                        <div className="room pe-5">2D Lồng tiếng</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                        <div className="time">11:45</div>
-                    </div>
-                </div>
+                {
+                    showtimes.map((showtime) => (
+                        <div className="cinema-item">
+                            <p className="name">{showtime.cinemaName}</p>
+                            <div className="time-wrapper">
+                                <div className="room pe-5">{showtime.roomName}</div>
+                                {
+                                    showtime.showtimes.map((item) => (
+                                        <div className="time">{item}</div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    ))
+                }
             </div>
         </div>
     );

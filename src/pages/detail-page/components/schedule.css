@@ -33,29 +33,6 @@
     border-radius: 4px;
 }
 
-.shedule .position {
-    width: 100%;
-    align-items: center;
-    display: flex;
-    gap: 5px;
-    grid-column: span 5;
-    margin: 0 auto;
-}
-
-.shedule .position .form-floating {
-    width: 100%;
-}
-
-.shedule .position .form-floating .form-select {
-    padding: 0;
-    padding: 0 10px;
-    width: 100%;
-    height: 40px;
-    min-height: 0;
-    background-color: transparent;
-    border: #252422 1px solid;
-}
-
 .list-cinemas {
     display: flex;
     flex-direction: column;
