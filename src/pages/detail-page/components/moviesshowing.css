@@ -42,10 +42,10 @@
 
 .list-movie-showing a .buy-ticket .button {
     border: none;
-    display: none;
+    display: flex;
+    opacity: 0;
     justify-content: center;
     align-items: center;
-    color: #252422;
     position: absolute;
     margin: 0;
     padding: 0;
@@ -54,15 +54,17 @@
     width: 100%;
     height: 100%;
     background-color: rgba(26, 26, 26, 0.5);
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
 }
 
 .list-movie-showing a .buy-ticket .btn {
     background-color: #f1683a;
-    color: #252422;
+    color: #fff;
     padding: 8px 20px;
     width: 120px;
 }
 
 .list-movie-showing a:hover .button {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
 }

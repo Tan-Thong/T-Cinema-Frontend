@@ -12,8 +12,12 @@
 }
 
 .position .form-floating .form-select {
+    white-space: nowrap;       /* Ngăn chữ xuống dòng */
+    overflow: hidden;          /* Ẩn phần văn bản bị tràn */
+    text-overflow: ellipsis;
     padding: 0;
     padding: 0 10px;
+    padding-right: 30px;
     width: 100%;
     height: 40px;
     min-height: 0;

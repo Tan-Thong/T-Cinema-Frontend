@@ -23,3 +23,4 @@ export async function findByMovieAndDay(movieID: number) : Promise<ShowtimeModel
 
     return result;
 }
+

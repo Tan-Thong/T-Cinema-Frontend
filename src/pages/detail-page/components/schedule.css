@@ -2,23 +2,23 @@
     margin-top: 50px;
 }
 
-.shedule {
-    margin-top: 20px;
+.schedule {
     display: grid;
+    margin-top: 20px;
     grid-template-columns: repeat(12, 1fr);
     border-bottom: 2px #252422 solid;
     padding-bottom: 20px;
 }
 
-.shedule .list-day {
-    padding-right: 50px;
-    display: flex;
-    gap: 20px;
+.schedule .list-day {
+    width: 100%;
+    display: flex !important;
+    gap: 5px;
     grid-column: span 7;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 
-.shedule .list-day .item {
+.schedule .list-day .item {
     display: flex;
     width: 80px;
     height: 65px;
@@ -27,9 +27,19 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #cdc197;
+    background-color: #ccc4;
+    /* background-color: #cdc197; */
     color: #252422;
     padding-bottom: 4px;
+    border-radius: 4px;
+}
+
+.schedule .list-day button {
+    font-size: larger;
+    font-weight: 500;
+    border: none;
+    background-color: #ccc4;
+    padding: 0 10px;
     border-radius: 4px;
 }
 

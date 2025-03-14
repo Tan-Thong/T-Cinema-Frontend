@@ -11,10 +11,10 @@ const Footer = () => {
           <ul className="list-unstyled">
             <li className="small">Người thực hiện: <strong>Lê Văn Tấn Thông</strong></li>
             <li className="small">
-              Email: <a href="mailto:contact@movietickets.com" style={{color: "#cdc197"}}><strong>levantanthong.2602@gmail.com</strong></a>
+              Email: <a href="mailto:contact@movietickets.com" style={{color: "#fff"}}><strong>levantanthong.2602@gmail.com</strong></a>
             </li>
             <li className="small">
-              Điện thoại: <a href="tel:+84123456789" style={{color: "#cdc197"}}><strong>+84 348 807 764</strong></a>
+              Điện thoại: <a href="tel:+84123456789" style={{color: "#fff"}}><strong>+84 348 807 764</strong></a>
             </li>
           </ul>
         </div>
