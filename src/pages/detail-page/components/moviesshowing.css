@@ -64,6 +64,10 @@
     width: 120px;
 }
 
+.list-movie-showing a .buy-ticket .btn:hover {
+    background-color: #fb9440;
+}
+
 .list-movie-showing a:hover .button {
     opacity: 1;
     visibility: visible;

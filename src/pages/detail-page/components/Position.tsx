@@ -3,9 +3,15 @@ import "./position.css";
 import CinemaModel from "../../../models/CinemaModel";
 import { findAll } from "../../../api/CinemaAPI";
 
-const Position = () => {
+interface PositionProps {
+    selectedCity: string;
+    setSelectedCity: React.Dispatch<React.SetStateAction<string>>;
+    selectedCinema: string;
+    setSelectedCinema: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Position: React.FC<PositionProps> = ({ selectedCity, setSelectedCity, selectedCinema, setSelectedCinema }) => {
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
-    const [selectedCity, setSelectedCity] = useState<string>("all");
 
     useEffect(() => {
         findAll().then(cinemaData => {
@@ -15,17 +21,22 @@ const Position = () => {
         });
     }, []);
 
-    // Lọc cinemas theo thành phố được chọn
     const filteredCinemas = selectedCity === "all" 
         ? cinemas 
         : cinemas.filter(cinema => cinema.city === selectedCity);
+
+    // Reset selectedCinema nếu nó không còn trong danh sách sau khi đổi thành phố
+    useEffect(() => {
+        if (!filteredCinemas.some(cinema => String(cinema.cinemaName) === selectedCinema)) {
+            setSelectedCinema("all");
+        }
+    }, [selectedCity, cinemas]); // Chạy lại khi đổi thành phố hoặc danh sách rạp thay đổi
 
     return (
         <div className="position">
             <div className="form-floating">
                 <select 
                     className="form-select" 
-                    aria-label="Default select example"
                     value={selectedCity}
                     onChange={(e) => setSelectedCity(e.target.value)}
                 >
@@ -37,10 +48,14 @@ const Position = () => {
             </div>
 
             <div className="form-floating">
-                <select className="form-select" id="floatingSelect" aria-label="Floating label select example">
-                    <option selected>Tất cả rạp</option>
+                <select 
+                    className="form-select"
+                    value={selectedCinema}
+                    onChange={(e) => setSelectedCinema(e.target.value)}
+                >
+                    <option value="all">Tất cả rạp</option>
                     {filteredCinemas.map((cinema) => (
-                        <option key={cinema.cinemaId} value={cinema.cinemaId}>
+                        <option key={cinema.cinemaId} value={String(cinema.cinemaName)}>
                             {cinema.cinemaName}
                         </option>
                     ))}

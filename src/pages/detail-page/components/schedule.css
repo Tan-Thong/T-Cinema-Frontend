@@ -59,6 +59,24 @@
     margin-bottom: 20px;
 }
 
+.list-day .item {
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.list-day .item:hover {
+    background-color: #e0e0e0; /* Hiệu ứng khi hover */
+    transform: scale(1.05);
+}
+
+.list-day .item.active {
+    background-color: #ff5733;
+    color: white;
+    font-weight: bold;
+}
+
+
 .time-wrapper {
     display: flex;
     align-items: center;

@@ -6,8 +6,10 @@ import ShowtimeModel from "../../../models/ShowtimeModel";
 
 const Schedule = ({ movieID }: { movieID: number }) => {
     const [showtimes, setShowtimes] = useState<ShowtimeModel[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [startIndex, setStartIndex] = useState(0); // Vị trí bắt đầu của carousel
+    const [selectedDay, setSelectedDay] = useState<string>(""); // Ngày được chọn
+    const [selectedCity, setSelectedCity] = useState<string>("all"); // Tỉnh/Thành phố
+    const [selectedCinema, setSelectedCinema] = useState<string>("all"); // Rạp phim
+    const [startIndex, setStartIndex] = useState(0); // Điều hướng lịch
     const [days, setDays] = useState<{ day: string; title: string }[]>([]);
 
     useEffect(() => {
@@ -30,16 +32,13 @@ const Schedule = ({ movieID }: { movieID: number }) => {
         });
 
         setDays(next7Days);
+        setSelectedDay(next7Days[0].day); // Mặc định chọn ngày hiện tại
     }, []);
 
-    // Xử lý nút chuyển tiếp
-    const nextSlide = () => {
-        if (startIndex < days.length - 5) setStartIndex(startIndex + 1);
-    };
-
-    const prevSlide = () => {
-        if (startIndex > 0) setStartIndex(startIndex - 1);
-    };
+    const filteredShowtimes = showtimes.filter(showtime =>
+        (selectedCity === "all" || showtime.cinemaCity === selectedCity) &&
+        (selectedCinema === "all" || showtime.cinemaName === selectedCinema)
+    );
 
     return (
         <div className="schedule-wrapper">
@@ -50,29 +49,31 @@ const Schedule = ({ movieID }: { movieID: number }) => {
 
             <div className="schedule">
                 <div className="list-day">
-                    <button className="nav-btn left" onClick={prevSlide} disabled={startIndex === 0}>&lt;</button>
+                    <button className="nav-btn left" onClick={() => setStartIndex(Math.max(0, startIndex - 1))}>&lt;</button>
                     {days.slice(startIndex, startIndex + 5).map((item, index) => (
-                        <div key={index} className={`item ${index === 0 ? "active" : ""}`}>
+                        <div key={index} className={`item ${item.day === selectedDay ? "active" : ""}`}
+                            onClick={() => setSelectedDay(item.day)}>
                             <div className="title">{item.title}</div>
                             <div className="day">{item.day}</div>
                         </div>
                     ))}
-                    <button className="nav-btn right" onClick={nextSlide} disabled={startIndex >= days.length - 5}>&gt;</button>
+                    <button className="nav-btn right" onClick={() => setStartIndex(Math.min(days.length - 5, startIndex + 1))}>&gt;</button>
                 </div>
 
-                <Position />
+                <Position 
+                    selectedCity={selectedCity} setSelectedCity={setSelectedCity}
+                    selectedCinema={selectedCinema} setSelectedCinema={setSelectedCinema} 
+                />
             </div>
 
-
-            {/* Danh sách rạp chiếu */}
             <div className="list-cinemas">
-                {showtimes.map((showtime, index) => (
+                {filteredShowtimes.map((showtime, index) => (
                     <div key={index} className="cinema-item">
                         <p className="name">{showtime.cinemaName}</p>
                         <div className="time-wrapper">
                             <div className="room pe-5">{showtime.roomName}</div>
                             {showtime.showtimes.map((item, idx) => (
-                                <a href="/booking"><div key={idx} className="time">{item}</div></a>
+                                <a key={idx} href="/booking"><div className="time">{item}</div></a>
                             ))}
                         </div>
                     </div>

@@ -15,6 +15,7 @@ export async function findByMovieAndDay(movieID: number) : Promise<ShowtimeModel
     for (const key in response) {
         
         result.push({
+            cinemaCity : response[key].cinemaCity,
             cinemaName : response[key].cinemaName,
             roomName : response[key].roomName,
             showtimes : response[key].showtimes,
@@ -23,4 +24,5 @@ export async function findByMovieAndDay(movieID: number) : Promise<ShowtimeModel
 
     return result;
 }
+
 
