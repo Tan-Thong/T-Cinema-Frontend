@@ -88,7 +88,7 @@ const Schedule = ({ movieID }: { movieID: number }) => {
                             <div className="time-wrapper">
                                 <div className="room pe-5">{showtime.roomName}</div>
                                 {showtime.showtimes.map((item, idx) => (
-                                    <a key={idx} href="/booking">
+                                    <a key={idx} href={`/booking?movieId=${movieID}&showtimeId=${showtime.showtimeId}`}>
                                         <div className="time">{item}</div>
                                     </a>
                                 ))}

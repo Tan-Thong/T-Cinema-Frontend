@@ -15,6 +15,7 @@ export async function findByMovieAndDay(movieID: number, showDate : string) : Pr
     for (const key in response) {
         
         result.push({
+            showtimeId : response[key].showtimeId,
             cinemaCity : response[key].cinemaCity,
             cinemaName : response[key].cinemaName,
             roomName : response[key].roomName,
