@@ -1,10 +1,10 @@
 import ShowtimeModel from "../models/ShowtimeModel";
 import MyRequest from "./MyRequest";
 
-export async function findByMovieAndDay(movieID: number) : Promise<ShowtimeModel[]> {
+export async function findByMovieAndDay(movieID: number, showDate : string) : Promise<ShowtimeModel[]> {
     const result : ShowtimeModel[] = [];
     // EndPoint
-    const endPoint : string = `http://localhost:8080/showtimes/v2/movie/${movieID}`;
+    const endPoint : string = `http://localhost:8080/showtimes/v3?movieId=${movieID}&showDate=${showDate}`;
 
     // Call function Request
     const response = await MyRequest(endPoint);

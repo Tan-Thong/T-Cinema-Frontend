@@ -6,17 +6,11 @@ import ShowtimeModel from "../../../models/ShowtimeModel";
 
 const Schedule = ({ movieID }: { movieID: number }) => {
     const [showtimes, setShowtimes] = useState<ShowtimeModel[]>([]);
-    const [selectedDay, setSelectedDay] = useState<string>(""); // Ngày được chọn
-    const [selectedCity, setSelectedCity] = useState<string>("all"); // Tỉnh/Thành phố
-    const [selectedCinema, setSelectedCinema] = useState<string>("all"); // Rạp phim
-    const [startIndex, setStartIndex] = useState(0); // Điều hướng lịch
+    const [selectedDay, setSelectedDay] = useState<string>("");
+    const [selectedCity, setSelectedCity] = useState<string>("all");
+    const [selectedCinema, setSelectedCinema] = useState<string>("all");
+    const [startIndex, setStartIndex] = useState(0);
     const [days, setDays] = useState<{ day: string; title: string }[]>([]);
-
-    useEffect(() => {
-        findByMovieAndDay(movieID).then((showtimeData) => {
-            setShowtimes(showtimeData);
-        });
-    }, [movieID]);
 
     useEffect(() => {
         const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
@@ -32,8 +26,28 @@ const Schedule = ({ movieID }: { movieID: number }) => {
         });
 
         setDays(next7Days);
-        setSelectedDay(next7Days[0].day); // Mặc định chọn ngày hiện tại
+        setSelectedDay(next7Days[0].day);
     }, []);
+
+    // Gọi API khi `selectedDay` thay đổi
+    useEffect(() => {
+        if (selectedDay) {
+            // Chuyển định dạng từ "dd-MM" sang "yyyy-MM-dd"
+            const today = new Date();
+            const [day, month] = selectedDay.split("-").map(Number);
+            const formattedDate = `${today.getFullYear()}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+            // console.log("📡 Gọi API với:", { movieID, selectedDay: formattedDate });
+
+            findByMovieAndDay(movieID, formattedDate)
+                .then((showtimeData) => {
+                    setShowtimes(showtimeData);
+                })
+                .catch((error) => {
+                    console.error("Lỗi khi gọi API:", error);
+                });
+        }
+    }, [selectedDay, movieID]);
 
     const filteredShowtimes = showtimes.filter(showtime =>
         (selectedCity === "all" || showtime.cinemaCity === selectedCity) &&
@@ -60,24 +74,30 @@ const Schedule = ({ movieID }: { movieID: number }) => {
                     <button className="nav-btn right" onClick={() => setStartIndex(Math.min(days.length - 5, startIndex + 1))}>&gt;</button>
                 </div>
 
-                <Position 
+                <Position
                     selectedCity={selectedCity} setSelectedCity={setSelectedCity}
-                    selectedCinema={selectedCinema} setSelectedCinema={setSelectedCinema} 
+                    selectedCinema={selectedCinema} setSelectedCinema={setSelectedCinema}
                 />
             </div>
 
             <div className="list-cinemas">
-                {filteredShowtimes.map((showtime, index) => (
-                    <div key={index} className="cinema-item">
-                        <p className="name">{showtime.cinemaName}</p>
-                        <div className="time-wrapper">
-                            <div className="room pe-5">{showtime.roomName}</div>
-                            {showtime.showtimes.map((item, idx) => (
-                                <a key={idx} href="/booking"><div className="time">{item}</div></a>
-                            ))}
+                {filteredShowtimes.length > 0 ? (
+                    filteredShowtimes.map((showtime, index) => (
+                        <div key={index} className="cinema-item">
+                            <p className="name">{showtime.cinemaName}</p>
+                            <div className="time-wrapper">
+                                <div className="room pe-5">{showtime.roomName}</div>
+                                {showtime.showtimes.map((item, idx) => (
+                                    <a key={idx} href="/booking">
+                                        <div className="time">{item}</div>
+                                    </a>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    <div className="list-null">Không có lịch chiếu</div>
+                )}
             </div>
         </div>
     );
