@@ -2,7 +2,7 @@ import MovieModel from "../models/MovieModel";
 import Movie from "../models/MovieModel";
 import MyRequest from "./MyRequest";
 
-export async function findAll() : Promise<Movie[]> {
+export async function findAllMovies() : Promise<Movie[]> {
     const result : Movie[] = [];
     // EndPoint
     const endPoint : string = "http://localhost:8080/movies";
@@ -33,7 +33,7 @@ export async function findAll() : Promise<Movie[]> {
     return result;
 }
 
-export async function findByIdNot(movieID: number) : Promise<Movie[]> {
+export async function findMoviesByIdNot(movieID: number) : Promise<Movie[]> {
     const result : Movie[] = [];
     // EndPoint
     const endPoint : string = `http://localhost:8080/movies/not/${movieID}`;
@@ -64,29 +64,7 @@ export async function findByIdNot(movieID: number) : Promise<Movie[]> {
     return result;
 }
 
-// export async function getMovieByID(movieID : number) : Promise<MovieModel> {
-//     // EndPoint
-//     const endPoint : string = `http://localhost:8080/movies/${movieID}`;
-//     const result : Movie = getDefaultMovie();
-
-//     // Call function Request
-//     const response = await MyRequest(endPoint);
-
-//     result.movieId = response.movieId,
-//     result.title = response.title,
-//     result.country = response.country,
-//     result.director = response.director,
-//     result.duration = response.duration,
-//     result.releaseDate = response.releaseDate,
-//     result.posterUrl = response.posterUrl,
-//     result.trailerUrl = response.trailerUrl,
-//     result.movieDescription = response.movieDescription,
-//     result.rate = response.rate
-
-//     return result;
-// }
-
-export async function getMovieByID(movieID: number): Promise<MovieModel> {
+export async function findMovieByID(movieID: number): Promise<MovieModel> {
     // Endpoint
     const endPoint: string = `http://localhost:8080/movies/${movieID}`;
 

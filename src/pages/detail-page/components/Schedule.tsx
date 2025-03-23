@@ -32,12 +32,9 @@ const Schedule = ({ movieID }: { movieID: number }) => {
     // Gọi API khi `selectedDay` thay đổi
     useEffect(() => {
         if (selectedDay) {
-            // Chuyển định dạng từ "dd-MM" sang "yyyy-MM-dd"
             const today = new Date();
             const [day, month] = selectedDay.split("-").map(Number);
             const formattedDate = `${today.getFullYear()}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-
-            // console.log("📡 Gọi API với:", { movieID, selectedDay: formattedDate });
 
             findByMovieAndDay(movieID, formattedDate)
                 .then((showtimeData) => {
@@ -49,10 +46,34 @@ const Schedule = ({ movieID }: { movieID: number }) => {
         }
     }, [selectedDay, movieID]);
 
+    // Lọc theo thành phố và rạp
     const filteredShowtimes = showtimes.filter(showtime =>
         (selectedCity === "all" || showtime.cinemaCity === selectedCity) &&
         (selectedCinema === "all" || showtime.cinemaName === selectedCinema)
     );
+
+    // Nhóm suất chiếu theo `cinemaName` và `roomName`
+    const groupedShowtimes = filteredShowtimes.reduce((acc, showtime) => {
+        const key = `${showtime.cinemaName}-${showtime.roomName}`;
+
+        if (!acc[key]) {
+            acc[key] = {
+                cinemaName: showtime.cinemaName,
+                roomName: showtime.roomName,
+                showtimes: []
+            };
+        }
+
+        acc[key].showtimes.push({
+            showtimeId: showtime.showtimeId,
+            showTime: showtime.showTime
+        });
+
+        console.log("🛠 Grouped Data:", acc);
+
+        return acc;
+        
+    }, {} as Record<string, { cinemaName: string; roomName: string; showtimes: { showtimeId: number; showTime: string }[] }>);
 
     return (
         <div className="schedule-wrapper">
@@ -81,15 +102,16 @@ const Schedule = ({ movieID }: { movieID: number }) => {
             </div>
 
             <div className="list-cinemas">
-                {filteredShowtimes.length > 0 ? (
-                    filteredShowtimes.map((showtime, index) => (
+                {Object.values(groupedShowtimes).length > 0 ? (
+                    Object.values(groupedShowtimes).map((group, index) => (
                         <div key={index} className="cinema-item">
-                            <p className="name">{showtime.cinemaName}</p>
+                            <p className="name">{group.cinemaName}</p>
                             <div className="time-wrapper">
-                                <div className="room pe-5">{showtime.roomName}</div>
-                                {showtime.showtimes.map((item, idx) => (
-                                    <a key={idx} href={`/booking?movieId=${movieID}&showtimeId=${showtime.showtimeId}`}>
-                                        <div className="time">{item}</div>
+                                <div className="room pe-5">{group.roomName}</div>
+                                {group.showtimes.map((st) => (
+                                    
+                                    <a key={st.showtimeId} href={`/showtimes?movieId=${movieID}&showtimeId=${st.showtimeId}`}>
+                                        <div className="time">{st.showTime}</div>
                                     </a>
                                 ))}
                             </div>

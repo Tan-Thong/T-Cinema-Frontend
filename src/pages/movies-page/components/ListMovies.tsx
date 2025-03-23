@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./listmovies.css"
 import Movie from "../../home-page/components/Movie";
 import MovieModel from "../../../models/MovieModel";
-import { findAll } from "../../../api/MovieAPI";
+import { findAllMovies } from "../../../api/MovieAPI";
 function ListMovies() {
     const [movies, setMovies] = useState<MovieModel[]>([]);
 
     useEffect(() => {
-        findAll().then(
+        findAllMovies().then(
             movieData => {
                 setMovies(movieData);
             }

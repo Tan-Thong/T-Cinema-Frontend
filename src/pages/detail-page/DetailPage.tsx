@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./detailpage.css"
 import { useParams } from "react-router-dom";
 import MovieModel from "../../models/MovieModel";
-import { getMovieByID } from "../../api/MovieAPI";
+import { findMovieByID } from "../../api/MovieAPI";
 import MoviesShowing from "./components/MoviesShowing";
 import Schedule from "./components/Schedule";
 
@@ -13,7 +13,7 @@ const DetailPage: React.FC = () => {
     const [showModal, setShowModal] = useState(false); // State để hiển thị modal
 
     useEffect(() => {
-        getMovieByID(movieIdNumber).then(
+        findMovieByID(movieIdNumber).then(
             movieData => {
                 setMovie(movieData);
             }

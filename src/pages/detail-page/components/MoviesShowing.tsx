@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./moviesshowing.css"
-import { findByIdNot } from "../../../api/MovieAPI";
+import { findMoviesByIdNot } from "../../../api/MovieAPI";
 import MovieModel from "../../../models/MovieModel";
 
 interface MovieInterface {
@@ -11,7 +11,7 @@ const MoviesShowing: React.FC<MovieInterface> = (props) => {
     const [movies, setMovies] = useState<MovieModel[]>([]);
 
     useEffect(() => {
-        findByIdNot(props.movieId).then(
+        findMoviesByIdNot(props.movieId).then(
             movieData => {
                 setMovies(movieData);
             }
