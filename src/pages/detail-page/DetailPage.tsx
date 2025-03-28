@@ -59,7 +59,7 @@ const DetailPage: React.FC = () => {
                 <div className="movie-detail">
                     <img src={movie?.thumbnailUrl} alt="" />
                     <div className="detail">
-                        <div className="detail-title d-flex gap-4 align-items-center">
+                        <div className="detail-title d-flex gap-2 align-items-center">
                             <p className="text-black title">{movie?.title}</p>
                             <div className="classify">T18</div>
                         </div>
