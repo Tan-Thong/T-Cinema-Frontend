@@ -1,12 +1,14 @@
 class SeatModel {
     seatId : number;
-    seatNumber : string; 
+    seatRow : string; 
+    seatColumn : number; 
     seatType : string;
     status : string;
 
-    constructor(seatId : number, seatNumber : string, seatType : string, status : string) {
+    constructor(seatId : number, seatRow : string, seatColumn : number, seatType : string, status : string) {
         this.seatId = seatId;
-        this.seatNumber = seatNumber;
+        this.seatRow = seatRow;
+        this.seatColumn = seatColumn;
         this.seatType = seatType;
         this.status = status;
     }

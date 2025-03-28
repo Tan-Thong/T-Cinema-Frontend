@@ -17,6 +17,27 @@ const seatTypes = [
     { img: "/images/icons/sofa-disable.png", label: "Ghế đã đặt" }
 ];
 
+
+
+interface Seat {
+    seatId: number;
+    seatRow: string;
+    seatColumn: number;
+    type: string;
+    status: string;
+}
+
+const groupSeatsByRow = (seats: SeatModel[]): Record<string, SeatModel[]> => {
+    return seats.reduce<Record<string, SeatModel[]>>((acc, seat) => {
+        if (!acc[seat.seatRow]) {
+            acc[seat.seatRow] = [];
+        }
+        acc[seat.seatRow].push(seat);
+        return acc;
+    }, {} as Record<string, SeatModel[]>); // Ép kiểu cho object ban đầu
+};
+
+
 const Seats: React.FC = () => {
     const [seats, setSeats] = useState<SeatModel[]>([])
 
@@ -28,37 +49,25 @@ const Seats: React.FC = () => {
         )
     }, [])
 
+    const groupedSeats = groupSeatsByRow(seats);
+
     return (
-        <div className="seats-wrapper">
+        <div className="seats-wrapper text-center">
             <div className="screen mb-5">
                 <img src="/images/icons/screen.png" alt="Screen" />
             </div>
 
-            {/* {seatLayout.map((section, sectionIndex) => (
-                <div key={sectionIndex}>
-                    {[...Array(section.rows)].map((_, rowIndex) => (
-                        <div className="d-flex my-2" key={rowIndex}>
-                            {[...Array(section.seatsPerRow)].map((_, seatIndex) => (
-                                <img
-                                    key={seatIndex}
-                                    className="mx-2"
-                                    src={`/images/icons/sofa-${section.type}.png`}
-                                    alt={`Seat ${sectionIndex}-${rowIndex}-${seatIndex}`}
-                                />
-                            ))}
-                        </div>
+            {Object.keys(groupedSeats).map((row) => (
+                <div key={row} className="d-flex justify-content-center my-2">
+                    {groupedSeats[row].map((seat) => (
+                        <img
+                            key={seat.seatId}
+                            className="seat-icon mx-1"
+                            src={`/images/icons/sofa-${seat.seatType.toLowerCase()}.png`}
+                            alt={`Seat ${seat.seatId}`}
+                        />
                     ))}
                 </div>
-            ))} */}
-
-            {seats.map((seat) => (
-                <img
-                    key={seat.seatId}
-                    className="seat-icon mx-2"
-                    src="/images/icons/sofa-vip.png"
-                    alt={`Seat ${seat.seatId}`}
-                    data-id={seat.seatId} // Gán ID ghế
-                />
             ))}
 
             <div className="note d-flex align-items-center justify-content-center gap-3 mt-4">

@@ -10,7 +10,8 @@ export async function findAllSeats(): Promise<SeatModel[]> {
     for (const key in response) {
         result.push({
             seatId: response[key].seatId,
-            seatNumber: response[key].seatNumber,
+            seatRow: response[key].seatRow,
+            seatColumn: response[key].seatColumn,
             seatType: response[key].seatType,
             status: response[key].status,
         })
