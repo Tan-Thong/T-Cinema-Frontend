@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./seats.css";
+import SeatModel from "../../../models/SeatModel";
+import { findAllSeats } from "../../../api/SeatAPI";
 
 const seatLayout = [
     { type: "standard", rows: 3, seatsPerRow: 12 },
@@ -16,13 +18,23 @@ const seatTypes = [
 ];
 
 const Seats: React.FC = () => {
+    const [seats, setSeats] = useState<SeatModel[]>([])
+
+    useEffect(() => {
+        findAllSeats().then(
+            seatData => {
+                setSeats(seatData);
+            }
+        )
+    }, [])
+
     return (
         <div className="seats-wrapper">
             <div className="screen mb-5">
                 <img src="/images/icons/screen.png" alt="Screen" />
             </div>
 
-            {seatLayout.map((section, sectionIndex) => (
+            {/* {seatLayout.map((section, sectionIndex) => (
                 <div key={sectionIndex}>
                     {[...Array(section.rows)].map((_, rowIndex) => (
                         <div className="d-flex my-2" key={rowIndex}>
@@ -37,6 +49,16 @@ const Seats: React.FC = () => {
                         </div>
                     ))}
                 </div>
+            ))} */}
+
+            {seats.map((seat) => (
+                <img
+                    key={seat.seatId}
+                    className="seat-icon mx-2"
+                    src="/images/icons/sofa-vip.png"
+                    alt={`Seat ${seat.seatId}`}
+                    data-id={seat.seatId} // Gán ID ghế
+                />
             ))}
 
             <div className="note d-flex align-items-center justify-content-center gap-3 mt-4">
@@ -47,24 +69,6 @@ const Seats: React.FC = () => {
                     </div>
                 ))}
             </div>
-
-            {/* <div className="card shadow-sm p-3 bg-light text-dark">
-                <img
-                    src="/images/movies/thumbnail-interstellar.jpg"
-                    alt="Interstellar"
-                    className="card-img-top rounded"
-                />
-                <div className="card-body p-0 pt-3">
-                    <h5 className="card-title fw-bold">Interstellar</h5>
-                    <p className="mb-1"><strong>Thời gian:</strong> 118 phút</p>
-                    <p className="mb-1"><strong>Rạp:</strong> T-Cinema Satra Củ Chi</p>
-                    <p className="mb-1"><strong>Phòng:</strong> 2</p>
-                    <p className="mb-1"><strong>Ngày:</strong> 26/02/2025</p>
-                    <p className="mb-1"><strong>Suất chiếu:</strong> 17h30</p>
-                    <p className="mb-1"><strong>Số ghế:</strong> G12</p>
-                    <p className="fw-bold fs-5"><strong>Tổng:</strong> 120.000 đ</p>
-                </div>
-            </div> */}
         </div>
     );
 };

@@ -33,6 +33,40 @@ export async function findAllMovies() : Promise<Movie[]> {
     return result;
 }
 
+export async function findMoviesByStatus(status : string) : Promise<Movie[]> {
+    const result : Movie[] = [];
+    // EndPoint
+    // const endPoint : string = "http://localhost:8080/movies";
+    const endPoint : string = status === "showing"
+    ? "http://localhost:8080/movies/showing"
+    : "http://localhost:8080/movies/upcoming";
+    
+    // Call function Request
+    const response = await MyRequest(endPoint);
+
+    // const responseData = response._embedded.products;
+    console.log(response)
+
+    for (const key in response) {
+        
+        result.push({
+            movieId : response[key].movieId,
+            title : response[key].title,
+            country : response[key].country,
+            director : response[key].director,
+            duration : response[key].duration,
+            releaseDate : response[key].releaseDate,
+            thumbnailUrl : response[key].thumbnailUrl,
+            bannerUrl : response[key].bannerUrl,
+            trailerUrl : response[key].trailerUrl,
+            movieDescription : response[key].movieDescription,
+            rate : response[key].rate,
+        });
+    }
+
+    return result;
+}
+
 export async function findMoviesByIdNot(movieID: number) : Promise<Movie[]> {
     const result : Movie[] = [];
     // EndPoint
