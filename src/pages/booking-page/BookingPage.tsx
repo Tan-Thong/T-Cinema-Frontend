@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Seats from "./components/Seats";
 import MovieInfo from "./components/MovieInfo";
 import "./bookingpage.css"
 import Payment from "./components/Payment";
+import SeatModel from "../../models/SeatModel";
 
 const BookingPage: React.FC = (props) => {
+    const [selectedSeats, setSelectedSeats] = useState<SeatModel[]>([]);
+
     return (
         <div className="ticket-wrapper">
             <div className="step-box">
@@ -13,12 +16,12 @@ const BookingPage: React.FC = (props) => {
                     <p className="step-title">Chọn ghế</p>
                 </div>
                 <div className="w-100">
-                    <Seats />
+                    <Seats onSeatSelect={setSelectedSeats} />
                 </div>
             </div>
 
             <div>
-                <MovieInfo />
+                <MovieInfo selectedSeats={selectedSeats} />
                 <Payment />
             </div>
         </div>

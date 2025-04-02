@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 import ShowtimeModel from "../../../models/ShowtimeModel";
 import MovieModel from "../../../models/MovieModel";
 import { findMovieByID } from "../../../api/MovieAPI";
+import SeatModel from "../../../models/SeatModel";
 
 const seatLayout = [
     { type: "standard", rows: 3, seatsPerRow: 12 },
@@ -20,7 +21,12 @@ const seatTypes = [
     { img: "/images/icons/sofa-disable.png", label: "Ghế đã đặt" }
 ];
 
-const MovieInfo: React.FC = () => {
+interface MovieInfoProps {
+    selectedSeats: SeatModel[];
+}
+
+const MovieInfo: React.FC<MovieInfoProps> = ({ selectedSeats }) => {
+
     const [infoBooking, setInfoBooking] = useState<ShowtimeModel>();
     const [movie, setMovie] = useState<MovieModel>();
 
@@ -61,8 +67,16 @@ const MovieInfo: React.FC = () => {
                     ? new Intl.DateTimeFormat("vi-VN").format(new Date(infoBooking.showDate))
                     : "Ngày không hợp lệ"}</p>
                 <p className="mb-1"><strong>Suất chiếu:</strong> {infoBooking?.showTime}</p>
-                <p className="mb-1"><strong>Số ghế:</strong> G12</p>
-                <p className="fw-bold fs-5"><strong>Tổng:</strong> 120.000 đ</p>
+                <p className="mb-1">
+                    <strong>Số ghế:</strong> {selectedSeats.length > 0
+                        ? selectedSeats.map(seat => `${seat.seatRow}${seat.seatColumn}`).join(", ")
+                        : "Chưa chọn ghế"}
+                </p>
+
+                <p className="fw-bold fs-5">
+                    <strong>Tổng:</strong> {selectedSeats.length * 120000} đ
+                </p>
+
             </div>
         </div>
     );

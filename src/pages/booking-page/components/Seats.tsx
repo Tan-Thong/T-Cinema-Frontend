@@ -17,14 +17,8 @@ const seatTypes = [
     { img: "/images/icons/sofa-disable.png", label: "Ghế đã đặt" }
 ];
 
-
-
-interface Seat {
-    seatId: number;
-    seatRow: string;
-    seatColumn: number;
-    type: string;
-    status: string;
+interface SeatsProps {
+    onSeatSelect: (selectedSeats: SeatModel[]) => void;
 }
 
 const groupSeatsByRow = (seats: SeatModel[]): Record<string, SeatModel[]> => {
@@ -37,9 +31,20 @@ const groupSeatsByRow = (seats: SeatModel[]): Record<string, SeatModel[]> => {
     }, {} as Record<string, SeatModel[]>); // Ép kiểu cho object ban đầu
 };
 
-
-const Seats: React.FC = () => {
+const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
     const [seats, setSeats] = useState<SeatModel[]>([])
+    const [selectedSeats, setSelectedSeats] = useState<SeatModel[]>([]);
+
+    useEffect(() => {
+        onSeatSelect(selectedSeats);
+    }, [selectedSeats, onSeatSelect]);
+
+    const handleSelectSeat = (seat: SeatModel) => {
+        setSelectedSeats((prev) => {
+            const isSelected = prev.find((s) => s.seatId === seat.seatId);
+            return isSelected ? prev.filter((s) => s.seatId !== seat.seatId) : [...prev, seat];
+        });
+    };
 
     useEffect(() => {
         findAllSeats().then(
@@ -59,16 +64,30 @@ const Seats: React.FC = () => {
 
             {Object.keys(groupedSeats).map((row) => (
                 <div key={row} className="d-flex justify-content-center my-2">
-                    {groupedSeats[row].map((seat) => (
-                        <img
-                            key={seat.seatId}
-                            className="seat-icon mx-1"
-                            src={`/images/icons/sofa-${seat.seatType.toLowerCase()}.png`}
-                            alt={`Seat ${seat.seatId}`}
-                        />
-                    ))}
+                    {groupedSeats[row].map((seat) => {
+                        const isSelected = selectedSeats.some((s) => s.seatId === seat.seatId);
+                        const isBooked = seat.status === "BOOKED"; // Kiểm tra xem ghế đã được đặt chưa
+
+                        return (
+                            <img
+                                key={seat.seatId}
+                                className="seat-icon mx-1"
+                                src={
+                                    isBooked
+                                        ? "/images/icons/sofa-disable.png" // Nếu ghế đã đặt thì dùng ảnh này
+                                        : isSelected
+                                            ? "/images/icons/sofa-checked.png" // Nếu ghế được chọn thì dùng ảnh này
+                                            : `/images/icons/sofa-${seat.seatType.toLowerCase()}.png` // Mặc định dùng ảnh ghế theo loại
+                                }
+                                alt={`Seat ${seat.seatId}`}
+                                onClick={() => !isBooked && handleSelectSeat(seat)} // Chỉ cho phép chọn nếu ghế chưa được đặt
+                                style={{ cursor: isBooked ? "not-allowed" : "pointer" }} // Thay đổi con trỏ khi ghế đã đặt
+                            />
+                        );
+                    })}
                 </div>
             ))}
+
 
             <div className="note d-flex align-items-center justify-content-center gap-3 mt-4">
                 {seatTypes.map((seat, index) => (

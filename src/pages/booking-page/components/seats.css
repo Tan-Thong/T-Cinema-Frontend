@@ -5,3 +5,13 @@
     align-items: center;
     width: 100%;
 }
+
+.seat-icon {
+    cursor: pointer;
+}
+
+.seat-icon.selected {
+    filter: brightness(1.5);
+    border: 2px solid gold;
+    border-radius: 5px;
+}

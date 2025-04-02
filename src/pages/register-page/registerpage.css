@@ -1,0 +1,26 @@
+.form-sub-header {
+    color: #cdcdcd;
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-top: -25px;
+    margin-bottom: 40px;
+}
+
+.cancel-btn {
+    display: block;
+    border-radius: 6px;
+    width: 100%;
+    height: 45px;
+    font-size: 1.3em;
+    font-weight: 500;
+    line-height: 45px;
+    color: #fff;
+    background-color: #252422;
+    border: none;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out
+}
+
+.cancel-btn:hover {
+    background-color: #1a1919;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./moviescollection.css"
 import Movie from "./Movie";
 import MovieModel from "../../../models/MovieModel";
@@ -22,12 +22,12 @@ function MoviesCollection() {
             <div className="action">
                 <div className="head d-flex">
                     <span className="block"></span>
-                    <p className="">Phim</p>
+                    <p className="">Phim đang chiếu</p>
                 </div>
-                <div className="d-flex btns px-3">
+                {/* <div className="d-flex btns px-3">
                     <div className="px-3">Phim đang chiếu</div>
                     <div className="px-3">Phim sắp chiếu</div>
-                </div>
+                </div> */}
             </div>
             <div className="movies-wrapper">
                 {
