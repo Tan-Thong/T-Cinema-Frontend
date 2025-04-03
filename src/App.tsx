@@ -8,6 +8,7 @@ import Footer from './pages/header-footer/footer/Footer';
 import BookingPage from './pages/booking-page/BookingPage';
 import LoginPage from './pages/login-page/LoginPage';
 import RegisterPage from './pages/register-page/RegisterPage';
+import AdminPage from './pages/admin/AdminPage';
 
 // Layout chính chứa Header & Footer
 const MainLayout = () => {
@@ -35,6 +36,7 @@ function App() {
         {/* Trang login không có Header/Footer */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </BrowserRouter>
   );
