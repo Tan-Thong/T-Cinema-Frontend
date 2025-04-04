@@ -17,6 +17,11 @@
     background-color: #252422;
 }
 
+.btn:hover {
+    color: #cdc197;
+    background-color: #444;
+}
+
 .header {
     height: 60px;
     position: fixed;
@@ -26,8 +31,13 @@
     font-size: 2.4em;
     font-weight: 600;
     line-height: 60px;
-    padding: 0 100px;
+    /* padding: 0 100px; */
     text-transform: uppercase;
+}
+
+.add-search {
+    position: sticky;
+    left: 0;
 }
 
 .list {
@@ -38,6 +48,34 @@
     overflow: auto;
 }
 
+.list form {
+    display: flex;
+    gap: 50px;
+    padding: 50px;
+    padding-bottom: 34px;
+    background-color: #f6f6f6;
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+
+.imgs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.list form input {
+    background-color: #fff !important;
+    height: 40px;
+}
+
+.list form > div {
+    width: 50%;
+    height: 100%;
+}
+
 .search-wrapper {
     width: 600px;
     margin-left: auto;
@@ -45,7 +83,6 @@
 
 .search-box {
     position: relative;
-    /* box-shadow: 0 2px 15px rgba(0,0,0,0.2); */
     border: #6c757d 1px solid;
     border-radius: 10px;
     transition: all 0.3s ease;

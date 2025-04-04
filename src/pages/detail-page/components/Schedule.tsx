@@ -69,7 +69,7 @@ const Schedule = ({ movieID }: { movieID: number }) => {
             showTime: showtime.showTime
         });
 
-        console.log("🛠 Grouped Data:", acc);
+        console.log("Grouped Data:", acc);
 
         return acc;
         

@@ -4,7 +4,7 @@ function Navbar() {
     return (
         <nav className="nav">
             <div className="logo-wrapper">
-                <img src="./../images/icons/profile.png" alt="" style={{ width: "50%" }} />
+                <img src="images/profiles/avatar.jpg" alt="" />
                 <h5>Xin chào, Tấn Thông</h5>
             </div>
             <div className="action-wrapper">

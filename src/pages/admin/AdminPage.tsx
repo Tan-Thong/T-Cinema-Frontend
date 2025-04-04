@@ -1,101 +1,88 @@
 import "./adminpage.css";
 import Navbar from "./components/Navbar";
+import TableMovies from "./product/TableMovies";
 
 function AdminPage() {
     return (
         <div className="admin-content">
             <Navbar />
             <div className="main">
-                <div className="header">
+                <div className="header px-5">
                     Trang quản lý phim
                 </div>
                 <div className="list">
-                    <div className="d-flex px-5 py-3">
-                        <button className="btn btn-add">Thêm phim mới</button>
-                        <div className="search-wrapper">
-                            <div className="search-box">
-                                <i className="fas fa-search search-icon"></i>
-                                <input type="text" className="form-control search-input" placeholder="Search anything..." />
-                                <button className="btn search-button">
-                                    Search
-                                </button>
+                    <div className="add-search px-5">
+                        <div className=" d-flex py-3">
+                            <button className="btn btn-add">Thêm phim mới</button>
+                            <div className="search-wrapper">
+                                <div className="search-box">
+                                    <i className="fas fa-search search-icon"></i>
+                                    <input type="text" className="form-control search-input" placeholder="Search anything..." />
+                                    <button className="btn search-button">
+                                        Search
+                                    </button>
+                                </div>
                             </div>
                         </div>
+
+                        <form action="" method="post" className="d-flex">
+                            <div>
+                                <div className="imgs" style={{width: "100%", margin: "0 auto"}}>
+                                    <img src="images/movies/thumbnail-dia-dao.jpg" alt="" style={{height: "250px"}}/>
+                                    <img src="images/banners/banner-dia-dao.jpg" alt="" style={{height: "250px"}}/>
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Thumbnail</label>
+                                    <input type="file" className="form-control" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Banner</label>
+                                    <input type="file" className="form-control" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Trailer url</label>
+                                    <input type="text" className="form-control" placeholder="Trailer url"/>
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Độ tuổi</label>
+                                    <input type="text" className="form-control"  placeholder="Độ tuổi" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Đánh giá</label>
+                                    <input type="text" className="form-control"  placeholder="Đánh giá" />
+                                </div>
+                            </div>
+                            <div>
+                                <div className="mb-3">
+                                    <label className="form-label">Tên phim</label>
+                                    <input type="text" className="form-control" placeholder="Tên phim" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Ngày chiếu</label>
+                                    <input type="date" className="form-control" placeholder="Ngày chiếu" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Thời lượng</label>
+                                    <input type="text" className="form-control" placeholder="Thời lượng" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Quốc gia</label>
+                                    <input type="text" className="form-control" placeholder="Quốc gia" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Đạo diễn</label>
+                                    <input type="text" className="form-control" placeholder="Đạo diễn" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Example textarea</label>
+                                    <textarea className="form-control" rows={6}></textarea>
+                                </div>
+                                <button className="btn btn-success" style={{width: "100%", marginTop: "auto"}}>Xác nhận</button>
+                            </div>
+                        </form>
                     </div>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Thumbnail</th>
-                                <th scope="col">Tên phim</th>
-                                <th scope="col">Ngày chiếu</th>
-                                <th scope="col">Thời lượng</th>
-                                <th scope="col">Quốc gia</th>
-                                <th scope="col">Đạo diễn</th>
-                                <th scope="col">Độ tuổi</th>
-                                <th scope="col">Đánh giá</th>
-                                <th scope="col">Banner</th>
-                                <th scope="col">Trailer</th>
-                                <th scope="col">Mô tả</th>
-                                <th scope="col">Chức năng</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td><img src="images/movies/thumbnail-dia-dao.jpg" alt="" style={{ height: "250px" }} /></td>
-                                <td>Địa đạo</td>
-                                <td>04/04/2025</td>
-                                <td>128 phút</td>
-                                <td>Việt Nam</td>
-                                <td>Bùi Thạc Chuyên</td>
-                                <td>T16</td>
-                                <td>9.7</td>
-                                <td>images/banners/banner-dia-dao.jpg</td>
-                                <td>https://www.youtube.com/embed/xh6IDHjvytU?si=foNoTvHDcCf-aVS4</td>
-                                <td>Địa Đạo: Mặt Trời Trong Bóng Tối là dự án điện ảnh kỷ niệm 50 năm hòa bình thống nhất đất nước, dự kiến khởi chiếu 30.04.2025. Phim do đạo diễn Bùi Thạc Chuyên cầm trịch, với sự tham gia của dàn diễn viên thực lực – Thái Hòa, Quang Tuấn và diễn viên trẻ Hồ Thu Anh. Vào năm 1967, chiến tranh Việt Nam ngày càng khốc liệt. Đội du kích 21 người do BẢY THEO chỉ huy tại căn cứ Bình An Đông trở thành mục tiêu mà quân đội Mỹ TÌM VÀ DIỆT số 1 khi nhận nhiệm vụ bằng mọi giá phải bảo vệ một nhóm thông tin tình báo chiến lược mới đến ẩn náu tại căn cứ. Các cuộc liên lạc vô tuyến điện từ với nhóm tình báo bị quân đội Mỹ phát hiện và định vị, lấy đi lợi thế duy nhất của đội du kích là sự vô hình trong hệ thống địa đạo rộng khắp, phức tạp và bí ẩn. Bộ phim là những câu chuyện đan xen giữa tình đồng đội, tình yêu và khát khao sống ở những người lính. Trên hết, vẫn là nghĩa vụ và sự hi sinh vì Tổ Quốc. Đạo diễn Bùi Thạc Chuyên nung nấu 10 năm trời để chuẩn bị cho phim điện ảnh Địa Đạo, đem câu chuyện huyền thoại về nhân dân miền Nam tài trí thông minh và tinh thần yêu nước ngoan cường ngày ấy lên màn ảnh rộng. Lịch sử đã chứng minh, dẫu cho trên đầu là bom rơi đạn nổ, dưới hầm là không khí đặc quánh đến hít thở cũng khó khăn, chỉ cần trong tim mỗi người chiến sĩ luôn hướng đến ánh sáng tự do của một dân tộc tự do trong tương lai, họ sẽ kiên trì đứng vững mà chiến đấu. Như có mặt trời trong bóng tối luôn soi sáng dẫn đường.</td>
-                                <td>
-                                    <div className="btn btn-add">Chỉnh sửa</div>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <th scope="row">2</th>
-                                <td><img src="images/movies/thumbnail-dia-dao.jpg" alt="" style={{ height: "250px" }} /></td>
-                                <td>Địa đạo</td>
-                                <td>04/04/2025</td>
-                                <td>128 phút</td>
-                                <td>Việt Nam</td>
-                                <td>Bùi Thạc Chuyên</td>
-                                <td>T16</td>
-                                <td>9.7</td>
-                                <td>images/banners/banner-dia-dao.jpg</td>
-                                <td>https://www.youtube.com/embed/xh6IDHjvytU?si=foNoTvHDcCf-aVS4</td>
-                                <td>Địa Đạo: Mặt Trời Trong Bóng Tối là dự án điện ảnh kỷ niệm 50 năm hòa bình thống nhất đất nước, dự kiến khởi chiếu 30.04.2025. Phim do đạo diễn Bùi Thạc Chuyên cầm trịch, với sự tham gia của dàn diễn viên thực lực – Thái Hòa, Quang Tuấn và diễn viên trẻ Hồ Thu Anh. Vào năm 1967, chiến tranh Việt Nam ngày càng khốc liệt. Đội du kích 21 người do BẢY THEO chỉ huy tại căn cứ Bình An Đông trở thành mục tiêu mà quân đội Mỹ TÌM VÀ DIỆT số 1 khi nhận nhiệm vụ bằng mọi giá phải bảo vệ một nhóm thông tin tình báo chiến lược mới đến ẩn náu tại căn cứ. Các cuộc liên lạc vô tuyến điện từ với nhóm tình báo bị quân đội Mỹ phát hiện và định vị, lấy đi lợi thế duy nhất của đội du kích là sự vô hình trong hệ thống địa đạo rộng khắp, phức tạp và bí ẩn. Bộ phim là những câu chuyện đan xen giữa tình đồng đội, tình yêu và khát khao sống ở những người lính. Trên hết, vẫn là nghĩa vụ và sự hi sinh vì Tổ Quốc. Đạo diễn Bùi Thạc Chuyên nung nấu 10 năm trời để chuẩn bị cho phim điện ảnh Địa Đạo, đem câu chuyện huyền thoại về nhân dân miền Nam tài trí thông minh và tinh thần yêu nước ngoan cường ngày ấy lên màn ảnh rộng. Lịch sử đã chứng minh, dẫu cho trên đầu là bom rơi đạn nổ, dưới hầm là không khí đặc quánh đến hít thở cũng khó khăn, chỉ cần trong tim mỗi người chiến sĩ luôn hướng đến ánh sáng tự do của một dân tộc tự do trong tương lai, họ sẽ kiên trì đứng vững mà chiến đấu. Như có mặt trời trong bóng tối luôn soi sáng dẫn đường.</td>
-                                <td>
-                                    <div className="btn">Chỉnh sửa</div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">3</th>
-                                <td><img src="images/movies/thumbnail-dia-dao.jpg" alt="" style={{ height: "250px" }} /></td>
-                                <td>Địa đạo</td>
-                                <td>04/04/2025</td>
-                                <td>128 phút</td>
-                                <td>Việt Nam</td>
-                                <td>Bùi Thạc Chuyên</td>
-                                <td>T16</td>
-                                <td>9.7</td>
-                                <td>images/banners/banner-dia-dao.jpg</td>
-                                <td>https://www.youtube.com/embed/xh6IDHjvytU?si=foNoTvHDcCf-aVS4</td>
-                                <td>Địa Đạo: Mặt Trời Trong Bóng Tối là dự án điện ảnh kỷ niệm 50 năm hòa bình thống nhất đất nước, dự kiến khởi chiếu 30.04.2025. Phim do đạo diễn Bùi Thạc Chuyên cầm trịch, với sự tham gia của dàn diễn viên thực lực – Thái Hòa, Quang Tuấn và diễn viên trẻ Hồ Thu Anh. Vào năm 1967, chiến tranh Việt Nam ngày càng khốc liệt. Đội du kích 21 người do BẢY THEO chỉ huy tại căn cứ Bình An Đông trở thành mục tiêu mà quân đội Mỹ TÌM VÀ DIỆT số 1 khi nhận nhiệm vụ bằng mọi giá phải bảo vệ một nhóm thông tin tình báo chiến lược mới đến ẩn náu tại căn cứ. Các cuộc liên lạc vô tuyến điện từ với nhóm tình báo bị quân đội Mỹ phát hiện và định vị, lấy đi lợi thế duy nhất của đội du kích là sự vô hình trong hệ thống địa đạo rộng khắp, phức tạp và bí ẩn. Bộ phim là những câu chuyện đan xen giữa tình đồng đội, tình yêu và khát khao sống ở những người lính. Trên hết, vẫn là nghĩa vụ và sự hi sinh vì Tổ Quốc. Đạo diễn Bùi Thạc Chuyên nung nấu 10 năm trời để chuẩn bị cho phim điện ảnh Địa Đạo, đem câu chuyện huyền thoại về nhân dân miền Nam tài trí thông minh và tinh thần yêu nước ngoan cường ngày ấy lên màn ảnh rộng. Lịch sử đã chứng minh, dẫu cho trên đầu là bom rơi đạn nổ, dưới hầm là không khí đặc quánh đến hít thở cũng khó khăn, chỉ cần trong tim mỗi người chiến sĩ luôn hướng đến ánh sáng tự do của một dân tộc tự do trong tương lai, họ sẽ kiên trì đứng vững mà chiến đấu. Như có mặt trời trong bóng tối luôn soi sáng dẫn đường.</td>
-                                <td>
-                                    <div className="btn">Chỉnh sửa</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <TableMovies />
                 </div>
             </div>
         </div>

@@ -22,6 +22,16 @@
     border-bottom: 2px solid #ccc;
 }
 
+.nav .logo-wrapper img {
+    /* min-width: 100px; */
+    max-width: 150px;
+    width: 150px;
+    /* min-height: 100px; */
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .action-wrapper {
     align-self: flex-start;
     display: flex;
