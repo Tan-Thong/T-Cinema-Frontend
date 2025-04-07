@@ -9,6 +9,8 @@ import BookingPage from './pages/booking-page/BookingPage';
 import LoginPage from './pages/login-page/LoginPage';
 import RegisterPage from './pages/register-page/RegisterPage';
 import AdminPage from './pages/admin/AdminPage';
+import AddMoviePage from './pages/admin/movie/AddMoviePage';
+import MovieTable from './pages/admin/movie/components/MovieTable';
 
 // Layout chính chứa Header & Footer
 const MainLayout = () => {
@@ -36,7 +38,10 @@ function App() {
         {/* Trang login không có Header/Footer */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/" element={<AdminPage />}>
+          <Route path="movies" element={<MovieTable />} />
+          <Route path="add-movies" element={<AddMoviePage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

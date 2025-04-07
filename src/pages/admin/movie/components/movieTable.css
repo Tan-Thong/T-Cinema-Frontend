@@ -1,0 +1,124 @@
+.movie-table-wrapper .btn-add {
+    height: 40px;
+    color: #cdc197;
+    background-color: #252422;
+}
+
+.movie-table-wrapper .btn:hover {
+    color: #cdc197;
+    background-color: #444;
+}
+
+.movie-table-wrapper .add-search {
+    position: sticky;
+    height: 60px;
+    left: 0;
+}
+
+.movie-table-wrapper {
+    margin: 0 auto;
+    margin-top: 60px;
+    width: 100%;
+    height: calc(100% - 60px);
+    
+}
+
+.movie-table-wrapper .search-wrapper {
+    width: 600px;
+    height: 40px;
+    margin-left: auto;
+}
+
+.movie-table-wrapper .search-box {
+    position: relative;
+    border: #6c757d 1px solid;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.movie-table-wrapper .search-input {
+    border-radius: 10px;
+    padding-left: 45px;
+    padding-right: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    height: 40px;
+    line-height: 40px;
+}
+
+.movie-table-wrapper .search-input:focus {
+    border-color: #fff;
+    box-shadow: none;
+}
+
+.movie-table-wrapper .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    z-index: 10;
+}
+
+.movie-table-wrapper .search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 6px;
+    padding: 2px 20px;
+    transition: all 0.3s ease;
+    color: #cdc197;
+    background-color: #252422;
+}
+
+.movie-table-wrapper .search-button:hover {
+    color: #cdc197;
+    background-color: #444;
+}
+
+.movie-table-wrapper .table {
+    font-size: 1.2em;
+    min-width: 100%;
+    height: 100%;
+    text-wrap: nowrap;
+}
+
+.movie-table-wrapper .table thead {
+    position: sticky;
+    top: 0;
+    min-width: 100%;
+    z-index: 2;
+}
+
+.movie-table-wrapper .table tbody {
+    position: sticky;
+    top: 0;
+    min-width: 100%;
+    overflow: auto;
+    z-index: 2;
+}
+
+.movie-table-wrapper .table tr {
+    height: 50px;
+    line-height: 50px;
+}
+
+.movie-table-wrapper .table thead tr {
+    height: 30px !important;
+    line-height: 30px;
+}
+
+.movie-table-wrapper .table th, .movie-table-wrapper .table td {
+    padding: 20px;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-table-wrapper .edit {
+    position: sticky;
+    right: 0;
+    top: 0;
+    border-left: 1px solid #dee2e6;
+}

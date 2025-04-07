@@ -53,7 +53,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-column: span 5;
     gap: 24px;
-    max-height: 550px;
+    min-height: 820px;
 }
 
 .movie-detail > img {
