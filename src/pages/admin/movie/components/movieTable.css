@@ -11,8 +11,11 @@
 
 .movie-table-wrapper .add-search {
     position: sticky;
+    background-color: #fff;
     height: 60px;
-    left: 0;
+    left: 10;
+    top: 60px;
+    z-index: 5;
 }
 
 .movie-table-wrapper {
@@ -86,14 +89,13 @@
 
 .movie-table-wrapper .table thead {
     position: sticky;
-    top: 0;
+    top: 120px;
     min-width: 100%;
     z-index: 2;
 }
 
-.movie-table-wrapper .table tbody {
-    position: sticky;
-    top: 0;
+.movie-table-wrapper .table {
+    height: 100px;
     min-width: 100%;
     overflow: auto;
     z-index: 2;
@@ -116,9 +118,14 @@
     text-overflow: ellipsis;
 }
 
-.movie-table-wrapper .edit {
+.movie-table-wrapper .edit, .movie-table-wrapper th:last-child {
     position: sticky;
     right: 0;
     top: 0;
     border-left: 1px solid #dee2e6;
+}
+
+.movie-table-wrapper .edit .btns {
+    display: flex;
+    flex-direction: column;
 }

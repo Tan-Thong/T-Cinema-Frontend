@@ -12,20 +12,30 @@ function MovieTable() {
         ).catch(console.error);
     }, []);
 
+    const handleDelete = async (movieId: number) => {
+        const confirm = window.confirm("Bạn có chắc muốn xóa phim này?");
+        if (!confirm) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/movies/${movieId}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                alert("Xóa thành công!");
+                // Cập nhật lại danh sách sau khi xóa
+                setMovies(prev => prev.filter(movie => movie.movieId !== movieId));
+            } else {
+                alert("Lỗi khi xóa phim.");
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi:", error);
+            alert("Lỗi kết nối server.");
+        }
+    };
+
     return (
         <div className="movie-table-wrapper">
-            <div className="add-search px-5">
-                <div className="d-flex" style={{height: "100%", alignItems: "center"}}>
-                    <a href="add-movies"><button className="btn btn-add">Thêm phim mới</button></a>
-                    <div className="search-wrapper">
-                        <div className="search-box">
-                            <i className="fas fa-search search-icon"></i>
-                            <input type="text" className="form-control search-input" placeholder="Search anything..." />
-                            <button className="btn search-button">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -61,7 +71,10 @@ function MovieTable() {
                                 <td>{movie.trailerUrl}</td>
                                 <td>{movie.movieDescription}</td>
                                 <td className="edit">
-                                    <button type="button" className="btn btn-add"> Chỉnh sửa </button>
+                                    <div className="btns mt-2">
+                                        <button type="button" className="btn btn-add"> Chỉnh sửa </button>
+                                        <button type="button" className="btn btn-add mt-2" onClick={() => handleDelete(movie.movieId)}> Xóa </button>
+                                    </div>
                                 </td>
                             </tr>
                         ))

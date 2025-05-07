@@ -1,20 +1,62 @@
+import { FormEvent, useState } from "react";
 import "./loginpage.css"
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
+
+    const handleSubmit = async (e : FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const payload = {
+            email, password
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/auth/token", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            const token = data.result.token;
+            
+            if (token) {
+                localStorage.setItem('token', token);
+                alert(token);
+                setTimeout(() => {
+                    navigate("/");
+                }, 1500);
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || "Đăng ký thất bại!");
+            }
+        } catch (error) {
+            
+        }
+    };
+
     return (
         <div className="login-content">
             <a href="/"><img id="logo" src="./../images/logo/cinema-logo-v5.png" alt="" /></a>
             <div className="cover">
                 <div className="form-wrapper">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <p className="form-header">Đăng nhập</p>
                         <div className="mb-3">
                             <label className="form-label">Email address</label>
-                            <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Email" />
+                            <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Email" value={email}
+                                onChange={(e) => setEmail(e.target.value)}/>
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Password</label>
-                            <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Mật khẩu" />
+                            <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Mật khẩu" value={password}
+                                onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                         <div className="mb-3 form-check">
                             <input type="checkbox" className="form-check-input" id="exampleCheck1" />

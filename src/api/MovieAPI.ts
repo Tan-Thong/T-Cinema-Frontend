@@ -110,6 +110,7 @@ export async function findMovieByID(movieID: number): Promise<MovieModel> {
     try {
         // Gửi request và nhận dữ liệu
         const response = await MyRequest(endPoint);
+        const myResponse = response.result 
 
         if (!response) {
             console.warn("Không tìm thấy dữ liệu, trả về giá trị mặc định.");
@@ -118,18 +119,18 @@ export async function findMovieByID(movieID: number): Promise<MovieModel> {
 
         // Trả về một đối tượng ProductModel từ dữ liệu API
         return {
-            movieId : response.movieId,
-            title : response.title,
-            country : response.country,
-            director : response.director,
-            duration : response.duration,
-            releaseDate : response.releaseDate,
-            thumbnailUrl : response.thumbnailUrl,
-            bannerUrl : response.bannerUrl,
-            classification : response.classification,
-            trailerUrl : response.trailerUrl,
-            movieDescription : response.movieDescription,
-            rate : response.rate,
+            movieId : myResponse.movieId,
+            title : myResponse.title,
+            country : myResponse.country,
+            director : myResponse.director,
+            duration : myResponse.duration,
+            releaseDate : myResponse.releaseDate,
+            thumbnailUrl : myResponse.thumbnailUrl,
+            bannerUrl : myResponse.bannerUrl,
+            classification : myResponse.classification,
+            trailerUrl : myResponse.trailerUrl,
+            movieDescription : myResponse.movieDescription,
+            rate : myResponse.rate,
         };
     } catch (error) {
         console.error("Lỗi khi gọi API:", error);
