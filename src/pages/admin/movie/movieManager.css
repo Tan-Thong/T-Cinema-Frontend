@@ -1,0 +1,89 @@
+.header {
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    background-color: #efebdb;
+    color: #252422;
+    font-size: 2.4em;
+    font-weight: 600;
+    line-height: 60px;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    z-index: 3;
+}
+
+.add-search {
+    position: fixed;
+    background-color: #fff;
+    height: 60px;
+    width: calc(100% - 400px);
+    margin-top: 60px;
+    z-index: 5;
+}
+
+.btn-add {
+    height: 40px;
+    color: #cdc197;
+    background-color: #252422;
+}
+
+.btn:hover {
+    color: #cdc197;
+    background-color: #444;
+}
+
+
+
+.search-wrapper {
+    width: 600px;
+    height: 40px;
+    margin-left: auto;
+}
+
+.search-box {
+    position: relative;
+    border: #6c757d 1px solid;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.search-input {
+    border-radius: 10px;
+    padding-left: 45px;
+    padding-right: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    height: 40px;
+    line-height: 40px;
+}
+
+.search-input:focus {
+    border-color: #fff;
+    box-shadow: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    z-index: 10;
+}
+
+.search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 6px;
+    padding: 2px 20px;
+    transition: all 0.3s ease;
+    color: #cdc197;
+    background-color: #252422;
+}
+
+.search-button:hover {
+    color: #cdc197;
+    background-color: #444;
+}

@@ -1,4 +1,4 @@
-.list form {
+form {
     display: flex;
     gap: 50px;
     padding: 50px;
@@ -16,12 +16,12 @@
     padding-bottom: 30px;
 }
 
-.list form input {
+form input {
     background-color: #fff !important;
     height: 40px;
 }
 
-.list form > div {
+form > div {
     width: 50%;
     height: 100%;
 }

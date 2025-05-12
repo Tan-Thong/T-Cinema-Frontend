@@ -1,0 +1,56 @@
+.cinema-table-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+}
+
+.cinema-table-wrapper .table {
+    font-size: 1.2em;
+    min-width: 100% !important;
+    text-wrap: nowrap;
+}
+
+.cinema-table-wrapper .table thead {
+    position: sticky;
+    top: 0;
+    min-width: 100%;
+    z-index: 2;
+}
+
+.cinema-table-wrapper .table tr {
+    height: 50px !important;
+    line-height: 50px;
+}
+
+.cinema-table-wrapper .table thead tr {
+    height: 30px !important;
+    line-height: 30px;
+}
+
+.cinema-table-wrapper .table tr {
+    height: 30px !important;
+    line-height: 30px;
+}
+
+.cinema-table-wrapper .table th,
+.cinema-table-wrapper .table td {
+    padding: 20px;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cinema-table-wrapper .edit,
+.cinema-table-wrapper th:last-child {
+    position: sticky;
+    right: 0;
+    top: 0;
+    width: 120px;
+    border-left: 1px solid #dee2e6;
+}
+
+.cinema-table-wrapper .edit .btns {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,10 +1,10 @@
 class CinemaModel {
     cinemaId : number;
-    cinemaName : number;
+    cinemaName : string;
     city : string;
     location : string;
 
-    constructor(cinemaId : number, cinemaName : number, city : string, location : string) {
+    constructor(cinemaId : number, cinemaName : string, city : string, location : string) {
         this.cinemaId =  cinemaId;
         this.cinemaName = cinemaName;
         this.city = city;

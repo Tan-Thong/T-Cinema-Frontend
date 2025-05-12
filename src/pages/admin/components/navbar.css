@@ -4,8 +4,7 @@
     padding: 30px;
     align-items: center;
     justify-content: space-between;
-    /* text-align: center; */
-    width: 20%;
+    width: 400px;
     min-height: 100vh;
     border-right: 2px solid #ccc;
     background-color: #efebdb;

@@ -3,14 +3,19 @@ import "./movieTable.css";
 import MovieModel from "../../../../models/MovieModel";
 import { findAllMovies } from "../../../../api/MovieAPI";
 
-function MovieTable() {
+type MovieTableProps = {
+    onEdit: (movie: MovieModel) => void;
+    refreshSignal: boolean;
+};
+
+function MovieTable({ onEdit, refreshSignal }: MovieTableProps) {
     const [movies, setMovies] = useState<MovieModel[]>([]);
 
     useEffect(() => {
         findAllMovies().then(
             movieData => setMovies(movieData)
         ).catch(console.error);
-    }, []);
+    }, [refreshSignal]);
 
     const handleDelete = async (movieId: number) => {
         const confirm = window.confirm("Bạn có chắc muốn xóa phim này?");
@@ -72,8 +77,8 @@ function MovieTable() {
                                 <td>{movie.movieDescription}</td>
                                 <td className="edit">
                                     <div className="btns mt-2">
-                                        <button type="button" className="btn btn-add"> Chỉnh sửa </button>
-                                        <button type="button" className="btn btn-add mt-2" onClick={() => handleDelete(movie.movieId)}> Xóa </button>
+                                        <button onClick={() => onEdit(movie)} className="btn btn-warning">Chỉnh sửa</button>
+                                        <button onClick={() => handleDelete(movie.movieId)} className="btn btn-danger mt-2">Xóa</button>
                                     </div>
                                 </td>
                             </tr>

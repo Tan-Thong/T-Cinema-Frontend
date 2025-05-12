@@ -9,8 +9,11 @@ import BookingPage from './pages/booking-page/BookingPage';
 import LoginPage from './pages/login-page/LoginPage';
 import RegisterPage from './pages/register-page/RegisterPage';
 import AdminPage from './pages/admin/AdminPage';
-import AddMoviePage from './pages/admin/movie/AddMoviePage';
-import MovieTable from './pages/admin/movie/components/MovieTable';
+import AddMoviePage from './pages/admin/movie/MovieManager';
+import MovieManager from './pages/admin/movie/MovieManager';
+import SeatManager from './pages/admin/seat/SeatManager';
+import RoomManager from './pages/admin/room/RoomManager';
+import CinemaManager from './pages/admin/cinema/CinemaManager';
 
 // Layout chính chứa Header & Footer
 const MainLayout = () => {
@@ -39,8 +42,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/admin/" element={<AdminPage />}>
-          <Route path="movies" element={<MovieTable />} />
-          <Route path="add-movies" element={<AddMoviePage />} />
+          <Route path="movies" element={<MovieManager />} />
+          <Route path="cinemas" element={<CinemaManager />} />
+          <Route path="rooms" element={<RoomManager />} />
+          <Route path="seats" element={<SeatManager />} />
         </Route>
       </Routes>
     </BrowserRouter>

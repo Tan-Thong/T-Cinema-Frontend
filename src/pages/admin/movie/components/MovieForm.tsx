@@ -1,7 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./movieForm.css";
+import MovieModel from "../../../../models/MovieModel";
 
-function MovieForm() {
+type MovieFormProps = {
+    movie: MovieModel | null;
+    onSubmitDone: () => void;
+    onCancel: () => void;
+};
+
+function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
     const [title, setTitle] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
     const [duration, setDuration] = useState("0");
@@ -33,6 +40,39 @@ function MovieForm() {
         }
     };
 
+    useEffect(() => {
+        if (movie) {
+            setTitle(movie.title);
+            setReleaseDate(movie.releaseDate);
+            setDuration(movie.duration.toString());
+            setCountry(movie.country);
+            setDirector(movie.director);
+            setClassification(movie.classification);
+            setRate(movie.rate.toString());
+            setDescription(movie.movieDescription);
+            setTrailer(movie.trailerUrl);
+            setThumbnailPreview(`http://localhost:8080/${movie.thumbnailUrl}`);
+            setBannerPreview(`http://localhost:8080/${movie.bannerUrl}`);
+            setThumbnail(null);
+            setBanner(null);
+        } else {
+            // Nếu là thêm mới
+            setTitle("");
+            setReleaseDate("");
+            setDuration("0");
+            setCountry("");
+            setDirector("");
+            setClassification("");
+            setRate("");
+            setDescription("");
+            setTrailer("");
+            setThumbnail(null);
+            setBanner(null);
+            setThumbnailPreview(null);
+            setBannerPreview(null);
+        }
+    }, [movie]);
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
@@ -40,27 +80,31 @@ function MovieForm() {
         const jsonData = {
             title,
             releaseDate,
-            duration: parseInt(duration),  // ✅ đổi chuỗi sang số
-            rate: parseFloat(rate),        // ✅ đổi chuỗi sang số
+            duration: parseInt(duration),
+            rate: parseFloat(rate),
             country,
             director,
             classification,
-            movieDescription: description, // ✅ đúng tên theo DTO
-            trailerUrl: trailer            // ✅ đúng tên theo DTO
+            movieDescription: description,
+            trailerUrl: trailer,
         };
 
         formData.append("data", new Blob([JSON.stringify(jsonData)], { type: "application/json" }));
         if (thumbnail) formData.append("thumbnail", thumbnail);
         if (banner) formData.append("banner", banner);
 
+        const url = movie ? `http://localhost:8080/movies/${movie.movieId}` : "http://localhost:8080/movies";
+        const method = movie ? "PUT" : "POST";
+
         try {
-            const response = await fetch("http://localhost:8080/movies", {
-                method: "POST",
+            const response = await fetch(url, {
+                method,
                 body: formData,
             });
 
             if (response.ok) {
-                alert("Gửi thành công!");
+                alert(movie ? "Cập nhật thành công!" : "Thêm mới thành công!");
+                onSubmitDone();
             } else {
                 alert("Lỗi khi gửi dữ liệu.");
             }
@@ -129,9 +173,10 @@ function MovieForm() {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Mô tả</label>
-                    <textarea className="form-control" rows={6} value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                    <textarea className="form-control" rows={7} value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                 </div>
-                <button className="btn btn-success" style={{ width: "100%", marginTop: "auto" }} type="submit">Xác nhận</button>
+                <button className="btn btn-success mb-3" style={{ width: "100%", marginTop: "auto", height: "40px"}} type="submit">Xác nhận</button>
+                <button className="btn btn-secondary" style={{ width: "100%", marginTop: "auto", height: "40px"}} type="button" onClick={onCancel}>Hủy</button>
             </div>
         </form>
     );

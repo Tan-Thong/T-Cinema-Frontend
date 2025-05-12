@@ -10,9 +10,10 @@ function Navbar() {
             </div>
             <div className="action-wrapper">
                 <div className="action-item"><Link to="movies">Quản lý phim</Link></div>
-                <div className="action-item">Quản lý ghế</div>
+                <div className="action-item"><Link to="cinemas">Quản lý rạp chiếu phim</Link></div>
+                <div className="action-item"><Link to="rooms">Quản lý phòng chiếu</Link></div>
                 <div className="action-item">Quản lý suất chiếu</div>
-                <div className="action-item">Quản lý rạp</div>
+                <div className="action-item"><Link to="seats">Quản lý ghế</Link></div>
                 <div className="action-item">Quản lý tin tức</div>
                 <div className="action-item">Thống kê</div>
             </div>
