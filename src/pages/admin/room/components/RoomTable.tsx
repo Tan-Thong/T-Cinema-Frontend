@@ -1,6 +1,43 @@
+import { useEffect, useState } from "react";
+import RoomModel from "../../../../models/RoomModel";
 import "./roomTable.css"
+import { findAll } from "../../../../api/RoomAPI";
 
-function RoomTable() {
+type RoomTableProps = {
+    onEdit: (room: RoomModel) => void;
+    refreshSignal: boolean;
+};
+
+function RoomTable({ onEdit, refreshSignal }: RoomTableProps) {
+    const [rooms, setRooms] = useState<RoomModel[]>([]);
+
+    useEffect(() => {
+        findAll().then(
+            roomData => setRooms(roomData)
+        ).catch(console.error);
+    }, [refreshSignal]);
+
+    const handleDelete = async (roomId: number) => {
+        const confirm = window.confirm("Bạn có chắc muốn xóa phim này?");
+        if (!confirm) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/rooms/${roomId}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                alert("Xóa thành công!");
+                // Cập nhật lại danh sách sau khi xóa
+                setRooms(prev => prev.filter(room => room.roomId !== roomId));
+            } else {
+                alert("Lỗi khi xóa phim.");
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi:", error);
+            alert("Lỗi kết nối server.");
+        }
+    };
 
     return (
         <div className="seat-table-wrapper">
@@ -18,76 +55,25 @@ function RoomTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>T-Cinema Củ Chi</td>
-                        <td>Phòng số 1</td>
-                        <td>2D</td>
-                        <td>{8 * 12} chỗ ngồi</td>
-                        <td>8</td>
-                        <td>12</td>
-                        <td className="edit">
-                            <div className="btns mt-2">
-                                <button className="btn btn-warning">Chỉnh sửa</button>
-                                <button className="btn btn-danger mt-2">Xóa</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>T-Cinema Củ Chi</td>
-                        <td>Phòng số 1</td>
-                        <td>2D</td>
-                        <td>{8 * 12} chỗ ngồi</td>
-                        <td>8</td>
-                        <td>12</td>
-                        <td className="edit">
-                            <div className="btns mt-2">
-                                <button className="btn btn-warning">Chỉnh sửa</button>
-                                <button className="btn btn-danger mt-2">Xóa</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>T-Cinema Củ Chi</td>
-                        <td>Phòng số 1</td>
-                        <td>2D</td>
-                        <td>{8 * 12} chỗ ngồi</td>
-                        <td>8</td>
-                        <td>12</td>
-                        <td className="edit">
-                            <div className="btns mt-2">
-                                <button className="btn btn-warning">Chỉnh sửa</button>
-                                <button className="btn btn-danger mt-2">Xóa</button>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    {/* {
-                        movies.map((movie) => (
-                            <tr key={movie.movieId}>
-                                <th scope="row">{movie.movieId}</th>
-                                <td><img src={`http://localhost:8080/${movie?.thumbnailUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
-                                <td><img src={`http://localhost:8080/${movie?.bannerUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
-                                <td>{movie.title}</td>
-                                <td>{movie.releaseDate}</td>
-                                <td>{movie.duration} phút</td>
-                                <td>{movie.country}</td>
-                                <td>{movie.director}</td>
-                                <td>{movie.classification}</td>
-                                <td>{movie.rate}</td>
-                                <td>{movie.trailerUrl}</td>
-                                <td>{movie.movieDescription}</td>
+                    {
+                        rooms.map((room) => (
+                            <tr key={room.roomId}>
+                                <th scope="row">{room.roomId}</th>
+                                <td>{room.cinemaId}</td>
+                                <td>{room.roomName}</td>
+                                <td>{room.roomType}</td>
+                                <td>{room.row * room.column} chỗ ngồi</td>
+                                <td>{room.row}</td>
+                                <td>{room.column}</td>
                                 <td className="edit">
                                     <div className="btns mt-2">
-                                        <button onClick={() => onEdit(movie)} className="btn btn-warning">Chỉnh sửa</button>
-                                        <button onClick={() => handleDelete(movie.movieId)} className="btn btn-danger mt-2">Xóa</button>
+                                        <button className="btn btn-warning">Chỉnh sửa</button>
+                                        <button className="btn btn-danger mt-2">Xóa</button>
                                     </div>
                                 </td>
                             </tr>
                         ))
-                    } */}
+                    }
                 </tbody>
             </table>
         </div>

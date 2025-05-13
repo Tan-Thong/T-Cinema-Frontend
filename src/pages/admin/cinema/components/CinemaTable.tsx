@@ -1,6 +1,43 @@
+import { useEffect, useState } from "react";
+import CinemaModel from "../../../../models/CinemaModel";
 import "./cinemaTable.css"
+import { findAll } from "../../../../api/CinemaAPI";
 
-function CinemaTable() {
+type CinemaTableProps = {
+    onEdit: (cinema: CinemaModel) => void;
+    refreshSignal: boolean;
+};
+
+function CinemaTable({ onEdit, refreshSignal }: CinemaTableProps) {
+    const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
+
+    useEffect(() => {
+        findAll().then(
+            cinemaData => setCinemas(cinemaData)
+        ).catch(console.error);
+    }, [refreshSignal]);
+
+    const handleDelete = async (cinemaId: number) => {
+        const confirm = window.confirm("Bạn có chắc muốn xóa phim này?");
+        if (!confirm) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/cinemas/${cinemaId}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                alert("Xóa thành công!");
+                // Cập nhật lại danh sách sau khi xóa
+                setCinemas(prev => prev.filter(cinema => cinema.cinemaId !== cinemaId));
+            } else {
+                alert("Lỗi khi xóa phim.");
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi:", error);
+            alert("Lỗi kết nối server.");
+        }
+    };
 
     return (
         <div className="cinema-table-wrapper">
@@ -15,43 +52,22 @@ function CinemaTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>T-Cinema Củ Chi</td>
-                        <td>TP.HCM</td>
-                        <td>1876247kjsdjhfbhjbvhjbas</td>
-                        <td className="edit">
-                            <div className="btns mt-2">
-                                <button className="btn btn-warning">Chỉnh sửa</button>
-                                <button className="btn btn-danger mt-2">Xóa</button>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    {/* {
-                        movies.map((movie) => (
-                            <tr key={movie.movieId}>
-                                <th scope="row">{movie.movieId}</th>
-                                <td><img src={`http://localhost:8080/${movie?.thumbnailUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
-                                <td><img src={`http://localhost:8080/${movie?.bannerUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
-                                <td>{movie.title}</td>
-                                <td>{movie.releaseDate}</td>
-                                <td>{movie.duration} phút</td>
-                                <td>{movie.country}</td>
-                                <td>{movie.director}</td>
-                                <td>{movie.classification}</td>
-                                <td>{movie.rate}</td>
-                                <td>{movie.trailerUrl}</td>
-                                <td>{movie.movieDescription}</td>
+                    {
+                        cinemas.map((cinema) => (
+                            <tr key={cinema.cinemaId}>
+                                <th scope="row">{cinema.cinemaId}</th>
+                                <td>{cinema.cinemaName}</td>
+                                <td>{cinema.city}</td>
+                                <td>{cinema.location}</td>
                                 <td className="edit">
                                     <div className="btns mt-2">
-                                        <button onClick={() => onEdit(movie)} className="btn btn-warning">Chỉnh sửa</button>
-                                        <button onClick={() => handleDelete(movie.movieId)} className="btn btn-danger mt-2">Xóa</button>
+                                        <button className="btn btn-warning" onClick={() => onEdit(cinema)}>Chỉnh sửa</button>
+                                        <button className="btn btn-danger mt-2" onClick={() => handleDelete(cinema.cinemaId)}>Xóa</button>
                                     </div>
                                 </td>
                             </tr>
                         ))
-                    } */}
+                    }
                 </tbody>
             </table>
         </div>

@@ -8,19 +8,19 @@ type CinemaFormProps = {
     onCancel: () => void;
 };
 
-function CinemaForm({cinema, onSubmitDone, onCancel} : CinemaFormProps) {
+function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
     const [cinemaName, setCinemaName] = useState("");
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState("TP Hồ Chí Minh");
     const [location, setLocation] = useState("");
 
     useEffect(() => {
-        if(cinema) {
+        if (cinema) {
             setCinemaName(cinema.cinemaName);
             setCity(cinema.city);
             setLocation(cinema.location);
         } else {
             setCinemaName("");
-            setCity("");
+            setCity("TP Hồ Chí Minh");
             setLocation("");
         }
     }, [cinema]);
@@ -28,14 +28,11 @@ function CinemaForm({cinema, onSubmitDone, onCancel} : CinemaFormProps) {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        const formData = new FormData();
         const jsonData = {
             cinemaName,
             city,
             location
         };
-
-        formData.append("data", new Blob([JSON.stringify(jsonData)], { type: "application/json" }));
 
         const url = cinema ? `http://localhost:8080/cinemas/${cinema.cinemaId}` : "http://localhost:8080/cinemas";
         const method = cinema ? "PUT" : "POST";
@@ -43,7 +40,10 @@ function CinemaForm({cinema, onSubmitDone, onCancel} : CinemaFormProps) {
         try {
             const response = await fetch(url, {
                 method,
-                body: formData,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(jsonData),
             });
 
             if (response.ok) {
@@ -63,19 +63,25 @@ function CinemaForm({cinema, onSubmitDone, onCancel} : CinemaFormProps) {
             <div className="form-section">
                 <div className="input-wrapper">
                     <label className="form-label">Tên rạp:</label>
-                    <input type="text" className="form-control" style={{width: "300px"}} placeholder="Tên rạp" value={cinemaName} onChange={(e) => setCinemaName(e.target.value)} />
+                    <input type="text" className="form-control" style={{ width: "300px" }} placeholder="Tên rạp" value={cinemaName} onChange={(e) => setCinemaName(e.target.value)} />
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Thành phố:</label>
-                    <select className="form-select" style={{width: "180px"}}>
-                    <option value="TP Hồ Chí Minh">TP Hồ Chí Minh</option>
-                    <option value="Hà Nội">Hà Nội</option>
-                    <option value="Đà Nẵng">Đà Nẵng</option>
-                </select>
+                    <select
+                        className="form-select"
+                        style={{ width: "180px" }}
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                    >
+                        <option value="TP Hồ Chí Minh">TP Hồ Chí Minh</option>
+                        <option value="Hà Nội">Hà Nội</option>
+                        <option value="Đà Nẵng">Đà Nẵng</option>
+                    </select>
+
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Địa chỉ:</label>
-                    <input type="text" className="form-control" style={{width: "550px"}} placeholder="Địa chỉ" value={location} onChange={(e) => setLocation(e.target.value)} />
+                    <input type="text" className="form-control" style={{ width: "550px" }} placeholder="Địa chỉ" value={location} onChange={(e) => setLocation(e.target.value)} />
                 </div>
             </div>
             <div className="form-section">

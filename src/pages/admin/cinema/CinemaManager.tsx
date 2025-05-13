@@ -19,7 +19,7 @@ function CinemaManager() {
     };
 
     const handleAddClick = () => {
-        setSelectedCinema(null); // Form sẽ hiểu là chế độ "Thêm mới"
+        setSelectedCinema(null);
         setShowForm(true);
     };
 
@@ -58,7 +58,7 @@ function CinemaManager() {
                         onCancel={handleCancel} />
                 </div>
             )}
-            <CinemaTable />
+            <CinemaTable onEdit={handleEditClick} refreshSignal={refresh}/>
         </div>
     );
 }
