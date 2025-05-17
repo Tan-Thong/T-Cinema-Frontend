@@ -29,7 +29,6 @@ class MovieModel {
             this.movieDescription = movieDescription;
             this.rate = rate;
         }
-    
 }
 
 export default MovieModel;

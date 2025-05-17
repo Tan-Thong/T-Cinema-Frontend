@@ -14,6 +14,7 @@ import MovieManager from './pages/admin/movie/MovieManager';
 import SeatManager from './pages/admin/seat/SeatManager';
 import RoomManager from './pages/admin/room/RoomManager';
 import CinemaManager from './pages/admin/cinema/CinemaManager';
+import ShowtimeManager from './pages/admin/showtime/ShowtimeManager';
 
 // Layout chính chứa Header & Footer
 const MainLayout = () => {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/admin/" element={<AdminPage />}>
           <Route path="movies" element={<MovieManager />} />
           <Route path="cinemas" element={<CinemaManager />} />
+          <Route path="showtimes" element={<ShowtimeManager />} />
           <Route path="rooms" element={<RoomManager />} />
           <Route path="seats" element={<SeatManager />} />
         </Route>

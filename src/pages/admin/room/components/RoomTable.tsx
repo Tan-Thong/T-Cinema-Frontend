@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import RoomModel from "../../../../models/RoomModel";
+import CinemaModel from "../../../../models/CinemaModel";
 import "./roomTable.css"
 import { findAll } from "../../../../api/RoomAPI";
+import { getCinemas } from "../../../../api/CinemaAPI";
 
 type RoomTableProps = {
     onEdit: (room: RoomModel) => void;
@@ -10,15 +12,15 @@ type RoomTableProps = {
 
 function RoomTable({ onEdit, refreshSignal }: RoomTableProps) {
     const [rooms, setRooms] = useState<RoomModel[]>([]);
+    const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
 
     useEffect(() => {
-        findAll().then(
-            roomData => setRooms(roomData)
-        ).catch(console.error);
+        findAll().then(setRooms).catch(console.error);
+        getCinemas().then(setCinemas).catch(console.error);
     }, [refreshSignal]);
 
     const handleDelete = async (roomId: number) => {
-        const confirm = window.confirm("Bạn có chắc muốn xóa phim này?");
+        const confirm = window.confirm("Bạn có chắc muốn xóa phòng này?");
         if (!confirm) return;
 
         try {
@@ -28,10 +30,9 @@ function RoomTable({ onEdit, refreshSignal }: RoomTableProps) {
 
             if (response.ok) {
                 alert("Xóa thành công!");
-                // Cập nhật lại danh sách sau khi xóa
                 setRooms(prev => prev.filter(room => room.roomId !== roomId));
             } else {
-                alert("Lỗi khi xóa phim.");
+                alert("Lỗi khi xóa phòng.");
             }
         } catch (error) {
             console.error("Lỗi khi gửi:", error);
@@ -59,16 +60,16 @@ function RoomTable({ onEdit, refreshSignal }: RoomTableProps) {
                         rooms.map((room) => (
                             <tr key={room.roomId}>
                                 <th scope="row">{room.roomId}</th>
-                                <td>{room.cinemaId}</td>
+                                <td>{room.cinema?.cinemaName}</td>
                                 <td>{room.roomName}</td>
-                                <td>{room.roomType}</td>
+                                <td>{room.roomType == 1 ? "2D" : "3D"}</td>
                                 <td>{room.row * room.column} chỗ ngồi</td>
                                 <td>{room.row}</td>
                                 <td>{room.column}</td>
                                 <td className="edit">
                                     <div className="btns mt-2">
-                                        <button className="btn btn-warning">Chỉnh sửa</button>
-                                        <button className="btn btn-danger mt-2">Xóa</button>
+                                        <button className="btn btn-warning" onClick={() => onEdit(room)}>Chỉnh sửa</button>
+                                        <button className="btn btn-danger mt-2" onClick={() => handleDelete(room.roomId)}>Xóa</button>
                                     </div>
                                 </td>
                             </tr>

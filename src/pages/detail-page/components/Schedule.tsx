@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./schedule.css";
 import Position from "./Position";
-import { findByMovieAndDay } from "../../../api/ShowtimeAPI";
+import { getShowtimes, getShowtimesByMovieAndDate } from "../../../api/ShowtimeAPI";
 import ShowtimeModel from "../../../models/ShowtimeModel";
 
 const Schedule = ({ movieID }: { movieID: number }) => {
@@ -11,6 +11,12 @@ const Schedule = ({ movieID }: { movieID: number }) => {
     const [selectedCinema, setSelectedCinema] = useState<string>("all");
     const [startIndex, setStartIndex] = useState(0);
     const [days, setDays] = useState<{ day: string; title: string }[]>([]);
+
+    // Lọc theo thành phố và rạp
+    const filteredShowtimes = showtimes.filter(showtime =>
+        (selectedCity === "all" || showtime.room?.cinema?.city === selectedCity) &&
+        (selectedCinema === "all" || showtime.room?.cinema?.cinemaName === selectedCinema)
+    );
 
     useEffect(() => {
         const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
@@ -26,54 +32,48 @@ const Schedule = ({ movieID }: { movieID: number }) => {
         });
 
         setDays(next7Days);
-        setSelectedDay(next7Days[0].day);
-    }, []);
+        setSelectedDay(next7Days[0].day); // đặt ngày mặc định
+    }, []); // Chỉ chạy 1 lần
 
-    // Gọi API khi `selectedDay` thay đổi
     useEffect(() => {
         if (selectedDay) {
-            const today = new Date();
-            const [day, month] = selectedDay.split("-").map(Number);
-            const formattedDate = `${today.getFullYear()}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+            const year = new Date().getFullYear();
+            const [day, month] = selectedDay.split('-');
+            const fullDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
-            findByMovieAndDay(movieID, formattedDate)
-                .then((showtimeData) => {
-                    setShowtimes(showtimeData);
-                })
-                .catch((error) => {
-                    console.error("Lỗi khi gọi API:", error);
-                });
+            getShowtimesByMovieAndDate(movieID, fullDate)
+                .then(setShowtimes)
+                .catch(console.error);
         }
-    }, [selectedDay, movieID]);
+    }, [movieID, selectedDay]);
 
-    // Lọc theo thành phố và rạp
-    const filteredShowtimes = showtimes.filter(showtime =>
-        (selectedCity === "all" || showtime.cinemaCity === selectedCity) &&
-        (selectedCinema === "all" || showtime.cinemaName === selectedCinema)
-    );
-
-    // Nhóm suất chiếu theo `cinemaName` và `roomName`
     const groupedShowtimes = filteredShowtimes.reduce((acc, showtime) => {
-        const key = `${showtime.cinemaName}-${showtime.roomName}`;
+        const cinemaName = showtime.room?.cinema?.cinemaName ?? "";
+        const roomName = showtime.room?.roomName ?? "";
+        const key = `${cinemaName}-${roomName}`;
 
         if (!acc[key]) {
             acc[key] = {
-                cinemaName: showtime.cinemaName,
-                roomName: showtime.roomName,
-                showtimes: []
+                cinemaName,
+                roomName,
+                times: [],
+                movieID: movieID,
             };
         }
 
-        acc[key].showtimes.push({
+        acc[key].times.push({
             showtimeId: showtime.showtimeId,
-            showTime: showtime.showTime
+            time: showtime.showTime,
         });
 
-        console.log("Grouped Data:", acc);
-
         return acc;
-        
-    }, {} as Record<string, { cinemaName: string; roomName: string; showtimes: { showtimeId: number; showTime: string }[] }>);
+    }, {} as Record<string, {
+        cinemaName: string;
+        roomName: string;
+        times: { showtimeId: number; time: string }[];
+        movieID: number;
+    }>);
+
 
     return (
         <div className="schedule-wrapper">
@@ -102,24 +102,27 @@ const Schedule = ({ movieID }: { movieID: number }) => {
             </div>
 
             <div className="list-cinemas">
-                {Object.values(groupedShowtimes).length > 0 ? (
-                    Object.values(groupedShowtimes).map((group, index) => (
-                        <div key={index} className="cinema-item">
-                            <p className="name">{group.cinemaName}</p>
-                            <div className="time-wrapper">
-                                <div className="room pe-5">{group.roomName}</div>
-                                {group.showtimes.map((st) => (
-                                    
-                                    <a key={st.showtimeId} href={`/showtimes?movieId=${movieID}&showtimeId=${st.showtimeId}`}>
-                                        <div className="time">{st.showTime}</div>
-                                    </a>
-                                ))}
+                <div className="list-cinemas">
+                    {Object.values(groupedShowtimes).length > 0 ? (
+                        Object.values(groupedShowtimes).map((group, index) => (
+                            <div key={index} className="cinema-item">
+                                <p className="name">{group.cinemaName}</p>
+                                <div className="time-wrapper">
+                                    <div className="room pe-5">{group.roomName}</div>
+                                    {group.times.map(time => (
+                                        <a key={time.showtimeId} href={`/showtimes?movieId=${group.movieID}&showtimeId=${time.showtimeId}`}>
+                                            <div className="time">{time.time}</div>
+                                        </a>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))
-                ) : (
-                    <div className="list-null">Không có lịch chiếu</div>
-                )}
+                        ))
+                    ) : (
+                        <div className="cinema-item" style={{fontSize: "1.4em"}}>Không có suất chiếu</div>
+                    )}
+
+                </div>
+
             </div>
         </div>
     );

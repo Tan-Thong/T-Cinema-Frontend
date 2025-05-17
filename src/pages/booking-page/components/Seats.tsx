@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./seats.css";
 import SeatModel from "../../../models/SeatModel";
-import { findAllSeats } from "../../../api/SeatAPI";
+import { getSeats } from "../../../api/SeatAPI";
 
 const seatLayout = [
     { type: "standard", rows: 3, seatsPerRow: 12 },
@@ -47,7 +47,7 @@ const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
     };
 
     useEffect(() => {
-        findAllSeats().then(
+        getSeats().then(
             seatData => {
                 setSeats(seatData);
             }

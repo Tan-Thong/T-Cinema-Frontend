@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import "./roomForm.css"
 import CinemaModel from "../../../../models/CinemaModel";
-import { findAll } from "../../../../api/CinemaAPI";
+import { getCinemas } from "../../../../api/CinemaAPI";
 import RoomModel from "../../../../models/RoomModel";
 
 type RoomFormProps = {
@@ -14,13 +14,21 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
 
     useEffect(() => {
-        findAll().then(
+        getCinemas().then(
             cinemaData => setCinemas(cinemaData)
         ).catch(console.error);
-    },[]);
+    }, []);
+
+    useEffect(() => {
+        if (!room && cinemas.length > 0) {
+            setCinemaId(cinemas[0].cinemaId);
+        }
+    }, [cinemas, room]);
+
 
     const [roomName, setRoomName] = useState("");
-    const [cinemaId, setCinemaId] = useState(1);
+    const [cinemaId, setCinemaId] = useState<number | null>();
+    const [cinema, setCinema] = useState<CinemaModel | null>();
     const [row, setRow] = useState(0);
     const [column, setColumn] = useState(0);
     const [roomType, setRoomType] = useState(1);
@@ -28,13 +36,12 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
     useEffect(() => {
         if (room) {
             setRoomName(room.roomName);
-            setCinemaId(room.cinemaId);
+            setCinema(room.cinema);
             setRow(room.row);
             setColumn(room.column);
             setRoomType(room.roomType);
         } else {
             setRoomName("");
-            setCinemaId(1);
             setRow(0);
             setColumn(0);
             setRoomType(1);
@@ -51,8 +58,8 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
             column,
             roomType,
         };
-
-        const url = room ? `http://localhost:8080/cinemas/${room.roomId}` : "http://localhost:8080/cinemas";
+        console.log("Submitting:", jsonData);
+        const url = room ? `http://localhost:8080/rooms/${room.roomId}` : "http://localhost:8080/rooms";
         const method = room ? "PUT" : "POST";
 
         try {
@@ -77,7 +84,7 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
     }
 
     return (
-        <form className="cinema-form">
+        <form onSubmit={handleSubmit} className="cinema-form">
             <div className="form-section">
                 <div className="input-wrapper">
                     <label className="form-label">Tên phòng:</label>
@@ -88,11 +95,11 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
                     <select
                         className="form-select"
                         style={{ width: "180px" }}
-                        value={cinemaId} onChange={(e) => setCinemaId(Number(e.target.value))}
+                        value={cinema?.cinemaId} onChange={(e) => setCinemaId(Number(e.target.value))}
                     >
                         {
                             cinemas.map((cinema) => (
-                                <option value={cinema.cinemaId}>{cinema.cinemaName}</option>
+                                <option key={cinema.cinemaId} value={cinema.cinemaId}>{cinema.cinemaName}</option>
                             ))
                         }
                     </select>
@@ -120,7 +127,7 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
             </div>
             <div className="form-section">
                 <button className="btn btn-success" style={{ width: "120px", height: "40px" }} type="submit" >Xác nhận</button>
-                <button className="btn btn-secondary" style={{ width: "120px", height: "40px" }} type="button">Hủy</button>
+                <button className="btn btn-secondary" style={{ width: "120px", height: "40px" }} type="button" onClick={onCancel}>Hủy</button>
             </div>
         </form>
     );

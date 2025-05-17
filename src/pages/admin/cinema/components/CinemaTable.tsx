@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CinemaModel from "../../../../models/CinemaModel";
 import "./cinemaTable.css"
-import { findAll } from "../../../../api/CinemaAPI";
+import { getCinemas } from "../../../../api/CinemaAPI";
 
 type CinemaTableProps = {
     onEdit: (cinema: CinemaModel) => void;
@@ -12,7 +12,7 @@ function CinemaTable({ onEdit, refreshSignal }: CinemaTableProps) {
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
 
     useEffect(() => {
-        findAll().then(
+        getCinemas().then(
             cinemaData => setCinemas(cinemaData)
         ).catch(console.error);
     }, [refreshSignal]);

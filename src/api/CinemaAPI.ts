@@ -1,7 +1,7 @@
 import CinemaModel from "../models/CinemaModel";
 import MyRequest from "./MyRequest";
 
-export async function findAll() : Promise<CinemaModel[]> {
+export async function getCinemas() : Promise<CinemaModel[]> {
     const result : CinemaModel[] = [];
     // EndPoint
     const endPoint : string = "http://localhost:8080/cinemas";
@@ -13,7 +13,6 @@ export async function findAll() : Promise<CinemaModel[]> {
     console.log(response)
 
     for (const key in response) {
-        
         result.push({
             cinemaId : response[key].cinemaId,
             cinemaName : response[key].cinemaName,

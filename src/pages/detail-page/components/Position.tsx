@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./position.css";
 import CinemaModel from "../../../models/CinemaModel";
-import { findAll } from "../../../api/CinemaAPI";
+import { getCinemas } from "../../../api/CinemaAPI";
 
 interface PositionProps {
     selectedCity: string;
@@ -14,7 +14,7 @@ const Position: React.FC<PositionProps> = ({ selectedCity, setSelectedCity, sele
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
 
     useEffect(() => {
-        findAll().then(cinemaData => {
+        getCinemas().then(cinemaData => {
             setCinemas(cinemaData);
         }).catch(error => {
             console.error("Error fetching cinemas:", error);

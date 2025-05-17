@@ -28,7 +28,7 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
         if (e.target.files?.length) {
             const file = e.target.files[0];
             setThumbnail(file);
-            setThumbnailPreview(URL.createObjectURL(file)); // 👈 Tạo URL tạm thời
+            setThumbnailPreview(URL.createObjectURL(file));
         }
     };
 

@@ -1,7 +1,7 @@
 import SeatModel from "../models/SeatModel";
 import MyRequest from "./MyRequest";
 
-export async function findAllSeats(): Promise<SeatModel[]> {
+export async function getSeats(): Promise<SeatModel[]> {
     const result: SeatModel[] = [];
     const endPoint: string = "http://localhost:8080/seats";
 
