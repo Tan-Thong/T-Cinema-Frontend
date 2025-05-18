@@ -15,6 +15,7 @@ import SeatManager from './pages/admin/seat/SeatManager';
 import RoomManager from './pages/admin/room/RoomManager';
 import CinemaManager from './pages/admin/cinema/CinemaManager';
 import ShowtimeManager from './pages/admin/showtime/ShowtimeManager';
+import RequireAdmin from './components/RequireAdmin';
 
 // Layout chính chứa Header & Footer
 const MainLayout = () => {
@@ -42,7 +43,13 @@ function App() {
         {/* Trang login không có Header/Footer */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/admin/" element={<AdminPage />}>
+        <Route path="/admin"
+          element={
+            <RequireAdmin>
+              <AdminPage />
+            </RequireAdmin>
+          }
+        >
           <Route path="movies" element={<MovieManager />} />
           <Route path="cinemas" element={<CinemaManager />} />
           <Route path="showtimes" element={<ShowtimeManager />} />

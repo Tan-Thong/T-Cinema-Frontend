@@ -46,8 +46,17 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
 
     useEffect(() => {
         if (showtime) {
+            setCinemaId(showtime.room?.cinema?.cinemaId);
+            setRoomId(showtime.room?.roomId);
+            setMovieId(showtime.movie?.movieId);
+            setShowDate(showtime.showDate);
+            setShowTime(showtime.showTime);
         } else {
-            
+            setCinemaId(undefined);
+            setRoomId(undefined);
+            setMovieId(undefined);
+            setShowDate("");
+            setShowTime("");
         }
     }, [showtime]);
 
@@ -62,12 +71,12 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
            showTime
         };
         console.log("Submitting:", jsonData);
-        const url = showtime ? `http://localhost:8080/showtimes` : "http://localhost:8080/showtimes";
+        const url = showtime ? `http://localhost:8080/showtimes/${showtime.showtimeId}` : "http://localhost:8080/showtimes";
         const method = showtime ? "PUT" : "POST";
 
         try {
-            const response = await fetch("http://localhost:8080/showtimes", {
-                method: "POST",
+            const response = await fetch(url , {
+                method,
                 headers: {
                     "Content-Type": "application/json",
                 },

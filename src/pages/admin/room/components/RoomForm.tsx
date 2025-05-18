@@ -84,7 +84,7 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="cinema-form">
+        <form onSubmit={handleSubmit} className="room-form">
             <div className="form-section">
                 <div className="input-wrapper">
                     <label className="form-label">Tên phòng:</label>

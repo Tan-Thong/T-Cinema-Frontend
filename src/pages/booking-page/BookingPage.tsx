@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Seats from "./components/Seats";
-import MovieInfo from "./components/MovieInfo";
+import MovieInfo from "./components/InfoBooking";
 import "./bookingpage.css"
-import Payment from "./components/Payment";
 import SeatModel from "../../models/SeatModel";
 
 const BookingPage: React.FC = (props) => {
@@ -22,7 +21,6 @@ const BookingPage: React.FC = (props) => {
 
             <div>
                 <MovieInfo selectedSeats={selectedSeats} />
-                <Payment />
             </div>
         </div>
     )

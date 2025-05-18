@@ -3,6 +3,13 @@
     flex-direction: column;
     gap: 30px;
     margin: 0;
+    padding: 50px 50px;
+    border-bottom: 1px solid #ccc;
+}
+
+.form-section input {
+    background-color: #fff !important;
+    height: 40px;
 }
 
 .form-section {

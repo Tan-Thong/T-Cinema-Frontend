@@ -1,8 +1,28 @@
-.cinema-form {
+/* .room-from {
+    display: flex;
+    gap: 50px;
+    padding: 50px;
+    padding-bottom: 34px;
+    background-color: #f6f6f6;
+    border-radius: 6px;
+    margin-bottom: 30px;
+} */
+
+.room-form {
     display: flex;
     flex-direction: column;
     gap: 30px;
     margin: 0;
+}
+
+.room-from input {
+    background-color: #fff !important;
+    height: 40px;
+}
+
+.room-from > div {
+    width: 50%;
+    height: 100%;
 }
 
 .form-section {

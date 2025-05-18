@@ -1,11 +1,14 @@
 import { FormEvent, useState } from "react";
 import "./loginpage.css"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function LoginPage() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
+
+    const from = location.state?.from?.pathname || "/";
 
     const handleSubmit = async (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -30,7 +33,7 @@ function LoginPage() {
                 localStorage.setItem('token', token);
                 alert(token);
                 setTimeout(() => {
-                    navigate("/");
+                    navigate(from, { replace: true });
                 }, 1500);
             } else {
                 const errorData = await response.json();

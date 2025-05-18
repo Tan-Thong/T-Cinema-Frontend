@@ -115,7 +115,7 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="d-flex">
+        <form onSubmit={handleSubmit} className="d-flex movie-from">
             <div>
                 <div className="imgs" style={{ width: "100%", margin: "0 auto" }}>
                     <img

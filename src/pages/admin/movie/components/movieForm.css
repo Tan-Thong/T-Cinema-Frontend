@@ -1,4 +1,4 @@
-form {
+.movie-from {
     display: flex;
     gap: 50px;
     padding: 50px;
@@ -16,12 +16,12 @@ form {
     padding-bottom: 30px;
 }
 
-form input {
+.movie-from input {
     background-color: #fff !important;
     height: 40px;
 }
 
-form > div {
+.movie-from > div {
     width: 50%;
     height: 100%;
 }

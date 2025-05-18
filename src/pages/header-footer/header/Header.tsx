@@ -16,7 +16,7 @@ const Header : React.FC = props => {
                 </nav>
 
                 <div className="sign-in-wrapper d-flex fw-bold">
-                    <a href="" style={{width: "100px"}}>Đăng nhập</a>
+                    <a href="/login" style={{width: "100px"}}>Đăng nhập</a>
                 </div>
         </header>
     )
