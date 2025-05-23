@@ -9,7 +9,7 @@ const HomePage : React.FC = (props) => {
         <div className="main" style={{marginTop: "-80px"}}>
             <Carousel />
             <MoviesCollection />
-            <Review />
+            {/* <Review /> */}
         </div>
     )
 }

@@ -12,6 +12,7 @@ type RoomFormProps = {
 
 function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         getCinemas().then(
@@ -67,6 +68,7 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
                 method,
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(jsonData),
             });

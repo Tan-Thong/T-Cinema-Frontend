@@ -28,7 +28,7 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
         getCinemas().then(
             cinemaData => setCinemas(cinemaData)
         ).catch(console.error);
-        
+
         findAllMovies().then(
             movieData => setMovies(movieData)
         ).catch(console.error);
@@ -63,22 +63,28 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
+        const token = localStorage.getItem("token"); // lấy token từ localStorage
+
         const jsonData = {
-           cinemaId,
-           roomId,
-           movieId,
-           showDate,
-           showTime
+            cinemaId,
+            roomId,
+            movieId,
+            showDate,
+            showTime
         };
-        console.log("Submitting:", jsonData);
-        const url = showtime ? `http://localhost:8080/showtimes/${showtime.showtimeId}` : "http://localhost:8080/showtimes";
+
+        const url = showtime
+            ? `http://localhost:8080/showtimes/${showtime.showtimeId}`
+            : "http://localhost:8080/showtimes";
+
         const method = showtime ? "PUT" : "POST";
 
         try {
-            const response = await fetch(url , {
+            const response = await fetch(url, {
                 method,
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}` // GỬI TOKEN
                 },
                 body: JSON.stringify(jsonData),
             });
@@ -93,7 +99,8 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
             console.error("Lỗi khi gửi:", error);
             alert("Lỗi kết nối server.");
         }
-    }
+    };
+
 
     return (
         <form onSubmit={handleSubmit} className="cinema-form">
@@ -131,11 +138,11 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
 
                 <div className="input-wrapper">
                     <label className="form-label">Ngày chiếu:</label>
-                    <input type="date" className="form-control" value={showDate} onChange={(e) => setShowDate(e.target.value)}/>
+                    <input type="date" className="form-control" value={showDate} onChange={(e) => setShowDate(e.target.value)} />
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Suất chiếu:</label>
-                    <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Giờ chiếu" value={showTime} onChange={(e) => setShowTime(e.target.value)}/>
+                    <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Giờ chiếu" value={showTime} onChange={(e) => setShowTime(e.target.value)} />
                 </div>
             </div>
             <div className="form-section">

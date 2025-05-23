@@ -1,0 +1,37 @@
+.list {
+    background-color: #ffecd1;
+}
+
+.list .buttons{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.list .buttons button {
+    height: 50px;
+    width: 200px;
+    border: 2px #252422 solid;
+    background-color: #efebdb;
+    letter-spacing: 3px;
+    /* font-family: Poppins; */
+    font-weight: 800;
+}
+
+.selected {
+    border: 2px #252422 solid;
+    background-color: #252422 !important;
+    color: #cdc197;
+}
+
+.list .movies-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    /* padding: 60px 30px; */
+    /* background-color: #1a1a1a; */
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px 10px;
+}

@@ -19,7 +19,6 @@ const Movie: React.FC<MovieInterface> = (props) => {
                     </div>
                 </div>
                 <div className="info">
-                    <span className="grade_18">18</span>
                     <p className="info-title">{props.movie.title}</p>
                 </div>
             </a>

@@ -10,6 +10,7 @@ type MovieTableProps = {
 
 function MovieTable({ onEdit, refreshSignal }: MovieTableProps) {
     const [movies, setMovies] = useState<MovieModel[]>([]);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         findAllMovies().then(
@@ -24,6 +25,9 @@ function MovieTable({ onEdit, refreshSignal }: MovieTableProps) {
         try {
             const response = await fetch(`http://localhost:8080/movies/${movieId}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (response.ok) {

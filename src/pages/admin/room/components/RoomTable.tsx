@@ -13,6 +13,7 @@ type RoomTableProps = {
 function RoomTable({ onEdit, refreshSignal }: RoomTableProps) {
     const [rooms, setRooms] = useState<RoomModel[]>([]);
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         findAll().then(setRooms).catch(console.error);
@@ -26,6 +27,9 @@ function RoomTable({ onEdit, refreshSignal }: RoomTableProps) {
         try {
             const response = await fetch(`http://localhost:8080/rooms/${roomId}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (response.ok) {

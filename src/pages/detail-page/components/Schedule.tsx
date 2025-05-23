@@ -79,7 +79,7 @@ const Schedule = ({ movieID }: { movieID: number }) => {
         <div className="schedule-wrapper">
             <div className="head d-flex">
                 <span className="block"></span>
-                <p className="">Lịch chiếu</p>
+                <p className="" style={{color: "#252422"}}>Lịch chiếu</p>
             </div>
 
             <div className="schedule">

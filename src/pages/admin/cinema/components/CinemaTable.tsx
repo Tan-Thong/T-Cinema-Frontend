@@ -10,6 +10,7 @@ type CinemaTableProps = {
 
 function CinemaTable({ onEdit, refreshSignal }: CinemaTableProps) {
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         getCinemas().then(
@@ -24,6 +25,9 @@ function CinemaTable({ onEdit, refreshSignal }: CinemaTableProps) {
         try {
             const response = await fetch(`http://localhost:8080/cinemas/${cinemaId}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (response.ok) {

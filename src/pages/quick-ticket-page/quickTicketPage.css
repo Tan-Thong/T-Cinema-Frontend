@@ -1,0 +1,67 @@
+.quick-ticket-wrapper {
+    box-sizing: border-box;
+    padding: 20px 0;
+    background-color: #252422;
+}
+
+.quick-ticket-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    background-color: #ffecd1;
+    min-height: calc(100vh - 120px);
+    width: 1250px;
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 12px;
+}
+
+.quick-ticket-section {
+    grid-column: span 2;
+}
+
+.quick-ticket-section .movies-wrapper {
+    width: 100%;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px 5px;
+}
+
+
+.movie-item {
+    grid-column: span 1;
+    color: #000;
+}
+
+.thumbnail-wrapper {
+    margin-top: 20px;
+    position: relative;
+}
+
+.movie-item .thumbnail {
+    border-radius: 8px 8px 0 0;
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Info */
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ccc;
+    background-color: #faf0ca;
+    height: 40px;
+    border-radius: 0 0 8px 8px;
+}
+
+.info .info-title {
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 5px;
+}
+

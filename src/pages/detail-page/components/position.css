@@ -5,6 +5,7 @@
     gap: 5px;
     grid-column: span 5;
     margin: 0 auto;
+    padding-left: 10px;
 }
 
 .position .form-floating {

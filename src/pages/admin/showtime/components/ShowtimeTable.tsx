@@ -16,19 +16,24 @@ function ShowtimeTable({ onEdit, refreshSignal }: ShowtimeTableProps) {
     }, [refreshSignal]);
 
     const handleDelete = async (showtimeId: number) => {
-        const confirm = window.confirm("Bạn có chắc muốn xóa phòng này?");
-        if (!confirm) return;
+        const confirmDelete = window.confirm("Bạn có chắc muốn xóa suất chiếu này?");
+        if (!confirmDelete) return;
+
+        const token = localStorage.getItem("token");
 
         try {
             const response = await fetch(`http://localhost:8080/showtimes/${showtimeId}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (response.ok) {
                 alert("Xóa thành công!");
                 setShowtimes(prev => prev.filter(showtime => showtime.showtimeId !== showtimeId));
             } else {
-                alert("Lỗi khi xóa phòng.");
+                alert("Lỗi khi xóa suất chiếu.");
             }
         } catch (error) {
             console.error("Lỗi khi gửi:", error);

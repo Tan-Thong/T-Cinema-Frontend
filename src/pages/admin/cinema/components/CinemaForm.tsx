@@ -12,6 +12,7 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
     const [cinemaName, setCinemaName] = useState("");
     const [city, setCity] = useState("TP Hồ Chí Minh");
     const [location, setLocation] = useState("");
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         if (cinema) {
@@ -42,6 +43,7 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
                 method,
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(jsonData),
             });

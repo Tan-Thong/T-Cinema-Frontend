@@ -22,6 +22,7 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
     const [banner, setBanner] = useState<File | null>(null);
     const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
     const [bannerPreview, setBannerPreview] = useState<string | null>(null);
+    const token = localStorage.getItem("token");
 
 
     const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +100,9 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
         try {
             const response = await fetch(url, {
                 method,
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
                 body: formData,
             });
 

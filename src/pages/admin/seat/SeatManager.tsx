@@ -6,7 +6,6 @@ function SeatManager() {
             <div className="header px-5">Trang quản lý ghế</div>
             <div className="add-search px-5">
                 <div className="d-flex" style={{ height: "100%", alignItems: "center" }}>
-                    <button className="btn btn-add" >Thêm mới</button>
                     <div className="search-wrapper">
                         <div className="search-box">
                             <i className="fas fa-search search-icon"></i>

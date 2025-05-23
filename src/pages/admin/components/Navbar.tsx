@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 
 function Navbar() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token"); 
+        navigate("/login");
+    };
     return (
         <nav className="nav">
             <div className="logo-wrapper">
@@ -14,12 +20,11 @@ function Navbar() {
                 <div className="action-item"><Link to="rooms">Quản lý phòng chiếu</Link></div>
                 <div className="action-item"><Link to="showtimes">Quản lý suất chiếu</Link></div>
                 <div className="action-item"><Link to="seats">Quản lý ghế</Link></div>
-                <div className="action-item">Quản lý tin tức</div>
                 <div className="action-item">Thống kê</div>
             </div>
             <div className="logout-btn">
                 <img src="/images/icons/log-out.png" alt="" style={{ width: "25px" }} />
-                <p>Đăng xuất</p>
+                <p onClick={handleLogout}>Đăng xuất</p>
             </div>
         </nav>
     )

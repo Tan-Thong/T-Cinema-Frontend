@@ -15,6 +15,9 @@ export default function RequireAdmin({ children }: { children: JSX.Element }) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
+    console.log("Token:", token);
+    console.log("Decoded:", decoded);
+
     return children;
 }
 
