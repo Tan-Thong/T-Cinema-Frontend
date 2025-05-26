@@ -3,6 +3,7 @@ import Seats from "./components/Seats";
 import MovieInfo from "./components/InfoBooking";
 import "./bookingpage.css"
 import SeatModel from "../../models/SeatModel";
+import InfoBooking from "./components/InfoBooking";
 
 const BookingPage: React.FC = (props) => {
     const [selectedSeats, setSelectedSeats] = useState<SeatModel[]>([]);
@@ -20,7 +21,7 @@ const BookingPage: React.FC = (props) => {
             </div>
 
             <div>
-                <MovieInfo selectedSeats={selectedSeats} />
+                <InfoBooking selectedSeats={selectedSeats} />
             </div>
         </div>
     )

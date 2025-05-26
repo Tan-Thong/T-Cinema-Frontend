@@ -55,3 +55,39 @@ input {
     gap: 30px 5px;
 } */
 
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 80%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 24px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+}
+
+.modal-close-button:hover {
+    color: #ff0000;
+}

@@ -4,31 +4,35 @@ import "./header.css"
 const Header: React.FC = props => {
     const [userName, setUserName] = useState<string | null>(null);
 
-    const token = localStorage.getItem("token");
-
     useEffect(() => {
         const fetchData = async () => {
             const token = localStorage.getItem("token");
+            if (!token) return; // Nếu không có token thì không gọi API
 
-            const response = await fetch("http://localhost:8080/users/myInfo", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+            try {
+                const response = await fetch("http://localhost:8080/users/myInfo", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch user info");
                 }
-            });
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch user info");
+                const resJson = await response.json();
+                const result = resJson.result;
+                setUserName(result.email);
+            } catch (error) {
+                console.error("Error fetching user info:", error);
             }
-
-            const resJson = await response.json();
-            const result = resJson.result;
-            setUserName(result.email);
         };
 
         fetchData();
     }, []);
+
 
     return (
         <header id="header">

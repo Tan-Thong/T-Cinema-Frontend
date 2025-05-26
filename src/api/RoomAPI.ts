@@ -26,6 +26,25 @@ export async function findAll() : Promise<RoomModel[]> {
     return result;
 }
 
+export async function getRoomById(roomId: number) : Promise<RoomModel> {
+    var result : RoomModel | null;
+    // EndPoint
+    const endPoint : string = `http://localhost:8080/rooms/${roomId}`;
+
+    // Call function Request
+    const response = await MyRequest(endPoint);
+    const myResponse = response.result
+
+    return {
+            roomId : myResponse.roomId,
+            roomName : myResponse.roomName,
+            row : myResponse.row,
+            column : myResponse.column,
+            cinema : myResponse.cinema,
+            roomType : myResponse.roomType,
+        };
+}
+
 export async function findRoomsByCinemaId(cinemaId: number) : Promise<RoomModel[]> {
     const result : RoomModel[] = [];
     // EndPoint

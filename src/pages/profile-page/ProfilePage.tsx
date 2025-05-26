@@ -3,11 +3,22 @@ import { useNavigate } from "react-router-dom";
 import "./profilePage.css"
 import UserModel from "../../models/UserModel";
 import { getMyInfo } from "../../api/UserAPI";
+import BookingModel from "../../models/BookingModel";
+import { getBookings } from "../../api/BookingAPI";
 
 const ProfilePage: React.FC = () => {
     const navigate = useNavigate();
     const [myInfo, setMyInfo] = useState<UserModel | null>();
+    const [bookings, setBookings] = useState<BookingModel[]>([]);
     const token = localStorage.getItem("token");
+    const [showModal, setShowModal] = useState(false);
+    const [selectedBooking, setSelectedBooking] = useState<BookingModel | null>(null);
+
+    const openModal = (booking: BookingModel) => {
+        setSelectedBooking(booking);
+        setShowModal(true);
+    };
+
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -15,6 +26,8 @@ const ProfilePage: React.FC = () => {
     };
 
     useEffect(() => {
+        getBookings().then(setBookings).catch()
+
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem("token");
@@ -92,15 +105,56 @@ const ProfilePage: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Lê Văn Tấn Thông</td>
-                                    <td>26/05/2025</td>
-                                    <td>240.000 đ</td>
-                                    <td><button>Chi tiết</button></td>
-                                </tr>
+                                {
+                                    bookings.map((booking) => (
+                                        <tr>
+                                            <th>{booking.bookingId}</th>
+                                            <td>{booking.user.email}</td>
+                                            <td>{booking.bookingDate}</td>
+                                            <td>{booking.totalPrice}</td>
+                                            <td><button className="btn btn-primary" onClick={() => openModal(booking)}>Chi tiết</button></td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
+
+                        {showModal && selectedBooking && (
+                            <div className="modal-backdrop">
+                                <div className="modal-content">
+                                    <button className="modal-close-button" onClick={() => setShowModal(false)}>×</button>
+                                    <h5>Chi tiết vé - Mã đặt vé #{selectedBooking.bookingId}</h5>
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID VÉ</th>
+                                                <th>TÊN RẠP</th>
+                                                <th>TÊN PHÒNG</th>
+                                                <th>TÊN PHIM</th>
+                                                <th>THỜI GIAN</th>
+                                                <th>SỐ GHẾ</th>
+                                                <th>GIÁ VÉ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {selectedBooking.ticketsResponse.map((ticket) => (
+                                                <tr key={ticket.ticketId}>
+                                                    <td>{ticket.ticketId}</td>
+                                                    <td>{ticket.cinemaName}</td>
+                                                    <td>{ticket.roomName}</td>
+                                                    <td>{ticket.movieName}</td>
+                                                    <td>{ticket.time}</td>
+                                                    <td>{ticket.seatRow + ticket.seatColumn}</td>
+                                                    <td>{ticket.ticketPrice}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+
+
                     </div>
                 </div>
             </div>

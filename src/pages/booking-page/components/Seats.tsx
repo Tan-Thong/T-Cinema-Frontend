@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import "./seats.css";
 import SeatModel from "../../../models/SeatModel";
-import { getSeats } from "../../../api/SeatAPI";
-
-const seatLayout = [
-    { type: "standard", rows: 3, seatsPerRow: 12 },
-    { type: "vip", rows: 4, seatsPerRow: 12 },
-    { type: "couple", rows: 1, seatsPerRow: 12 }
-];
+import { getSeats, getSeatsByRoomId } from "../../../api/SeatAPI";
+import { getRoomById } from "../../../api/RoomAPI";
+import RoomModel from "../../../models/RoomModel";
 
 const seatTypes = [
     { img: "/images/icons/sofa-standard.png", label: "Ghế thường" },
     { img: "/images/icons/sofa-vip.png", label: "Ghế VIP" },
-    { img: "/images/icons/sofa-couple.png", label: "Ghế couple" },
     { img: "/images/icons/sofa-checked.png", label: "Ghế đang chọn" },
     { img: "/images/icons/sofa-disable.png", label: "Ghế đã đặt" }
 ];
@@ -21,19 +17,26 @@ interface SeatsProps {
     onSeatSelect: (selectedSeats: SeatModel[]) => void;
 }
 
-const groupSeatsByRow = (seats: SeatModel[]): Record<string, SeatModel[]> => {
-    return seats.reduce<Record<string, SeatModel[]>>((acc, seat) => {
-        if (!acc[seat.seatRow]) {
-            acc[seat.seatRow] = [];
-        }
-        acc[seat.seatRow].push(seat);
-        return acc;
-    }, {} as Record<string, SeatModel[]>); // Ép kiểu cho object ban đầu
-};
-
 const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
     const [seats, setSeats] = useState<SeatModel[]>([])
+    const [room, setRoom] = useState<RoomModel | null>()
     const [selectedSeats, setSelectedSeats] = useState<SeatModel[]>([]);
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const roomIdNumber = Number(queryParams.get("roomId"))
+
+    const getSeatPrice = (seatType: string): number => {
+        switch (seatType.toUpperCase()) {
+            case "STANDARD":
+                return 80000;
+            case "VIP":
+                return 120000;
+            default:
+                return 0;
+        }
+    };
+
 
     useEffect(() => {
         onSeatSelect(selectedSeats);
@@ -47,14 +50,18 @@ const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
     };
 
     useEffect(() => {
-        getSeats().then(
+        getRoomById(roomIdNumber).then(
+            roomData => {
+                setRoom(roomData);
+            }
+        )
+
+        getSeatsByRoomId(roomIdNumber).then(
             seatData => {
                 setSeats(seatData);
             }
         )
     }, [])
-
-    const groupedSeats = groupSeatsByRow(seats);
 
     return (
         <div className="seats-wrapper text-center">
@@ -62,32 +69,53 @@ const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
                 <img src="/images/icons/screen.png" alt="Screen" />
             </div>
 
-            {Object.keys(groupedSeats).map((row) => (
-                <div key={row} className="d-flex justify-content-center my-2">
-                    {groupedSeats[row].map((seat) => {
-                        const isSelected = selectedSeats.some((s) => s.seatId === seat.seatId);
-                        const isBooked = seat.status === "BOOKED"; // Kiểm tra xem ghế đã được đặt chưa
+            {room && [...Array(room.row)].map((_, rowIdx) => {
+                const rowChar = String.fromCharCode(65 + rowIdx);
+                return (
+                    <div key={rowChar} className="d-flex justify-content-center my-2">
+                        {[...Array(room.column)].map((_, colIdx) => {
+                            const colNumber = colIdx + 1;
 
-                        return (
-                            <img
-                                key={seat.seatId}
-                                className="seat-icon mx-1"
-                                src={
-                                    isBooked
-                                        ? "/images/icons/sofa-disable.png" // Nếu ghế đã đặt thì dùng ảnh này
-                                        : isSelected
-                                            ? "/images/icons/sofa-checked.png" // Nếu ghế được chọn thì dùng ảnh này
-                                            : `/images/icons/sofa-${seat.seatType.toLowerCase()}.png` // Mặc định dùng ảnh ghế theo loại
-                                }
-                                alt={`Seat ${seat.seatId}`}
-                                onClick={() => !isBooked && handleSelectSeat(seat)} // Chỉ cho phép chọn nếu ghế chưa được đặt
-                                style={{ cursor: isBooked ? "not-allowed" : "pointer" }} // Thay đổi con trỏ khi ghế đã đặt
-                            />
-                        );
-                    })}
-                </div>
-            ))}
+                            // Tìm ghế tương ứng trong danh sách từ API
+                            const seat = seats.find(s =>
+                                s.seatRow.toUpperCase() === rowChar.toUpperCase() &&
+                                Number(s.seatColumn) === colNumber
+                            );
 
+
+                            if (!seat) {
+                                return (
+                                    <img
+                                        key={`${rowChar}${colNumber}`}
+                                        className="seat-icon mx-1"
+                                        src="/images/icons/sofa-standard.png"
+                                        style={{ opacity: 0.3 }}
+                                        alt="Empty seat"
+                                    />
+                                );
+                            }
+
+                            const isSelected = selectedSeats.some(s => s.seatId === seat.seatId);
+
+                            return (
+                                <img
+                                    key={seat.seatId}
+                                    className="seat-icon mx-1"
+                                    src={
+                                        isSelected
+                                            ? "/images/icons/sofa-checked.png"
+                                            : `/images/icons/sofa-${seat.seatType.toLowerCase()}.png`
+                                    }
+                                    alt={`Seat ${seat.seatRow}${seat.seatColumn}`}
+                                    title={`Ghế ${seat.seatRow}${seat.seatColumn} - ${getSeatPrice(seat.seatType).toLocaleString()}đ`}
+                                    onClick={() => handleSelectSeat(seat)}
+                                    style={{ cursor: "pointer" }}
+                                />
+                            );
+                        })}
+                    </div>
+                );
+            })}
 
             <div className="note d-flex align-items-center justify-content-center gap-3 mt-4">
                 {seatTypes.map((seat, index) => (

@@ -50,12 +50,14 @@ const Schedule = ({ movieID }: { movieID: number }) => {
     const groupedShowtimes = filteredShowtimes.reduce((acc, showtime) => {
         const cinemaName = showtime.room?.cinema?.cinemaName ?? "";
         const roomName = showtime.room?.roomName ?? "";
+        const roomId = showtime.room?.roomId ?? 0;
         const key = `${cinemaName}-${roomName}`;
 
         if (!acc[key]) {
             acc[key] = {
                 cinemaName,
                 roomName,
+                roomId,
                 times: [],
                 movieID: movieID,
             };
@@ -70,6 +72,7 @@ const Schedule = ({ movieID }: { movieID: number }) => {
     }, {} as Record<string, {
         cinemaName: string;
         roomName: string;
+        roomId: number;
         times: { showtimeId: number; time: string }[];
         movieID: number;
     }>);
@@ -110,7 +113,7 @@ const Schedule = ({ movieID }: { movieID: number }) => {
                                 <div className="time-wrapper">
                                     <div className="room pe-5">{group.roomName}</div>
                                     {group.times.map(time => (
-                                        <a key={time.showtimeId} href={`/showtimes?movieId=${group.movieID}&showtimeId=${time.showtimeId}`}>
+                                        <a key={time.showtimeId} href={`/showtimes?movieId=${group.movieID}&roomId=${group.roomId}&showtimeId=${time.showtimeId}`}>
                                             <div className="time">{time.time}</div>
                                         </a>
                                     ))}

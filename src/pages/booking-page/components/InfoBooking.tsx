@@ -1,25 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./infoBooking.css";
-import { useLocation, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import ShowtimeModel from "../../../models/ShowtimeModel";
 import MovieModel from "../../../models/MovieModel";
 import { findMovieByID } from "../../../api/MovieAPI";
 import SeatModel from "../../../models/SeatModel";
 import { getShowtime } from "../../../api/ShowtimeAPI";
-
-const seatLayout = [
-    { type: "standard", rows: 3, seatsPerRow: 12 },
-    { type: "vip", rows: 4, seatsPerRow: 12 },
-    { type: "couple", rows: 1, seatsPerRow: 12 }
-];
-
-const seatTypes = [
-    { img: "/images/icons/sofa-standard.png", label: "Ghế thường" },
-    { img: "/images/icons/sofa-vip.png", label: "Ghế VIP" },
-    { img: "/images/icons/sofa-couple.png", label: "Ghế couple" },
-    { img: "/images/icons/sofa-checked.png", label: "Ghế đang chọn" },
-    { img: "/images/icons/sofa-disable.png", label: "Ghế đã đặt" }
-];
+import UserModel from "../../../models/UserModel";
 
 interface InfoBookingProps {
     selectedSeats: SeatModel[];
@@ -35,6 +22,37 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
 
     const movieIdNumber = Number(queryParams.get("movieId"));
     const showtimeIdNumber = Number(queryParams.get("showtimeId"))
+
+    const [myInfo, setMyInfo] = useState<UserModel | null>();
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await fetch("http://localhost:8080/users/myInfo", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch user info");
+                }
+
+                const resJson = await response.json();
+                const result = resJson.result;
+                setMyInfo(result);
+            } catch (error) {
+                console.error("Error fetching user info:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     useEffect(() => {
         findMovieByID(movieIdNumber).then(movie => {
             setMovie(movie)
@@ -44,6 +62,63 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
             setShowtime(showtime)
         })
     }, []);
+
+    const handleBooking = async () => {
+        if (!myInfo || !showtime || selectedSeats.length === 0) {
+            alert("Vui lòng đăng nhập và chọn ghế!");
+            return;
+        }
+
+        const bookingRequest = {
+            userId: myInfo.email,
+            showtimeId: showtime.showtimeId,
+            seatIds: selectedSeats.map(seat => seat.seatId),
+            totalPrice: selectedSeats.length * 120000,
+            paymentMethod: "VNPAY"
+        };
+
+        console.log("📤 Sending booking data:", bookingRequest);
+
+        try {
+            const response = await fetch("http://localhost:8080/bookings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(bookingRequest)
+            });
+
+            if (!response.ok) {
+                throw new Error("Đặt vé thất bại");
+            }
+
+            const data = await response.json();
+            alert("Đặt vé thành công!");
+            console.log("Booking created:", data);
+        } catch (error) {
+            console.error("Lỗi khi đặt vé:", error);
+            alert("Đặt vé thất bại!");
+        }
+    };
+
+    const getSeatPrice = (seatType: string): number => {
+        switch (seatType.toUpperCase()) {
+            case "STANDARD":
+                return 80000;
+            case "VIP":
+                return 120000;
+            case "COUPLE":
+                return 150000;
+            default:
+                return 0;
+        }
+    };
+
+    const totalPrice = selectedSeats.reduce(
+        (total, seat) => total + getSeatPrice(seat.seatType),
+        0
+    );
 
     return (
         <div className="info-booking">
@@ -69,7 +144,7 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
                     </p>
 
                     <p className="fw-bold fs-5">
-                        <strong>Tổng:</strong> {selectedSeats.length * 120000} đ
+                        <strong>Tổng:</strong> {totalPrice.toLocaleString()} đ
                     </p>
                 </div>
             </div>
@@ -77,9 +152,9 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
             <div className="payment-wrapper">
                 <p className="payment-title">Thanh toán</p>
                 <div className="payment">
-                    <div className="payment-method fill">
+                    <button className="payment-method fill" onClick={handleBooking}>
                         <img src="/images/logo/logo-vnpay.svg" alt="" />
-                    </div>
+                    </button>
                     <div className="checkbox">
                         <input type="checkbox" id="myCheckbox" name="myCheckbox" />
                         <label htmlFor="myCheckbox">Chấp nhận điều khoản và thanh toán</label>

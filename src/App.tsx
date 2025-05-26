@@ -9,7 +9,6 @@ import BookingPage from './pages/booking-page/BookingPage';
 import LoginPage from './pages/login-page/LoginPage';
 import RegisterPage from './pages/register-page/RegisterPage';
 import AdminPage from './pages/admin/AdminPage';
-import AddMoviePage from './pages/admin/movie/MovieManager';
 import MovieManager from './pages/admin/movie/MovieManager';
 import SeatManager from './pages/admin/seat/SeatManager';
 import RoomManager from './pages/admin/room/RoomManager';

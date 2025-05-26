@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import "./seatTable.css"
-import SeatModel from "../../../../models/SeatModel";
-import { getSeats } from "../../../../api/SeatAPI";
+import SeatShowtimeModel from "../../../../models/SeatShowtimeModel";
+import { getSeatShowtimes } from "../../../../api/SeatShowtimeAPI";
 
 function SeatTable() {
-    const [seats, setSeats] = useState<SeatModel[]>([])
+
+    const [seatShowtimes, setSeatShowtimes] = useState<SeatShowtimeModel[]>([])
 
     useEffect(() => {
-        getSeats().then(
-            seatData => {
-                setSeats(seatData);
+        getSeatShowtimes().then(
+            seatShowtimeData => {
+                setSeatShowtimes(seatShowtimeData);
             }
         )
+        console.log(seatShowtimes)
     }, [])
 
     return (
@@ -24,22 +26,24 @@ function SeatTable() {
                         <th scope="col">Hàng</th>
                         <th scope="col">Cột</th>
                         <th scope="col">Loại ghế</th>
-                        <th scope="col">Phòng chiếu</th>
+                        <th scope="col">ID Phòng</th>
+                        <th scope="col">Suất chiếu</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        seats.map((seat) => (
-                            <tr key={seat.seatId}>
-                                <th scope="row">{seat.seatId}</th>
-                                <td>{seat.seatRow}{seat.seatColumn}</td>
-                                <td>{seat.seatRow}</td>
-                                <td>{seat.seatColumn}</td>
-                                <td>{seat.seatType}</td>
-                                <td>1</td>
-                                <td>{seat.status}</td>
+                        seatShowtimes.map((seatShowtime) => (
+                            <tr key={seatShowtime.seat.seatId}>
+                                <th scope="row">{seatShowtime.seat.seatId}</th>
+                                <td>{seatShowtime.seat.seatRow}{seatShowtime.seat.seatColumn}</td>
+                                <td>{seatShowtime.seat.seatRow}</td>
+                                <td>{seatShowtime.seat.seatColumn}</td>
+                                <td>{seatShowtime.seat.seatType}</td>
+                                <td>{seatShowtime.roomId}</td>
+                                <td>{seatShowtime.showtime.showTime}</td>
+                                <td>{seatShowtime.seatStatus}</td>
                                 <td className="edit">
                                     <div className="btns mt-2">
                                         <button className="btn btn-warning">Chỉnh sửa</button>
