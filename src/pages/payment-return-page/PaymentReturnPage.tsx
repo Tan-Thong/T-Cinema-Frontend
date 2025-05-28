@@ -49,18 +49,18 @@ const PaymentReturnPage = () => {
 
                     alert("Thanh toán & đặt vé thành công!");
                     sessionStorage.clear();
-                    navigate("/"); // hoặc chuyển tới trang 'vé của tôi'
+                    navigate("/");
                 } catch (err) {
                     console.error("Lỗi tạo booking:", err);
                     alert("Lỗi khi tạo hóa đơn sau thanh toán!");
-                    navigate("/chon-ghe-lai");
+                    navigate("/");
                 }
             };
 
             createBooking();
         } else {
             alert("Thanh toán thất bại hoặc bị hủy");
-            navigate("/chon-ghe-lai");
+            navigate("/");
         }
     }, [navigate]);
 
