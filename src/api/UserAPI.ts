@@ -8,8 +8,12 @@ export async function getMyInfo(): Promise<UserModel> {
     const myResponse = response.result;
 
     return {
-            email: myResponse.email,
-            active: myResponse.active,
-            roles: myResponse.roles,
-        };
+        userId: myResponse.userId,
+        email: myResponse.email,
+        phoneNumber: myResponse.phoneNumber,
+        fullName: myResponse.fullName,
+        password: myResponse.password,
+        active: myResponse.active,
+        roles: myResponse.roles,
+    };
 }

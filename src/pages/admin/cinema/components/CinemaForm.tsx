@@ -13,6 +13,7 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
     const [city, setCity] = useState("TP Hồ Chí Minh");
     const [location, setLocation] = useState("");
     const token = localStorage.getItem("token");
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
         if (cinema) {
@@ -28,6 +29,7 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setErrors({}); // reset lỗi cũ
 
         const jsonData = {
             cinemaName,
@@ -48,11 +50,17 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
                 body: JSON.stringify(jsonData),
             });
 
+            const data = await response.json();
+
             if (response.ok) {
                 alert(cinema ? "Cập nhật thành công!" : "Thêm mới thành công!");
                 onSubmitDone();
             } else {
-                alert("Lỗi khi gửi dữ liệu.");
+                if (data.code === 1001 && data.result) {
+                    setErrors(data.result); // Gán lỗi từ backend vào state errors
+                } else {
+                    alert(data.message || "Đăng ký thất bại!");
+                }
             }
         } catch (error) {
             console.error("Lỗi khi gửi:", error);
@@ -65,13 +73,16 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
             <div className="form-section">
                 <div className="input-wrapper">
                     <label className="form-label">Tên rạp:</label>
-                    <input type="text" className="form-control" style={{ width: "300px" }} placeholder="Tên rạp" value={cinemaName} onChange={(e) => setCinemaName(e.target.value)} />
+                    <div>
+                        <input type="text" className="form-control" style={{ width: "300px" }} placeholder="Tên rạp" value={cinemaName} onChange={(e) => setCinemaName(e.target.value)} />
+                        {errors.cinemaName && <div className="text-danger">{errors.cinemaName}</div>}
+                    </div>
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Thành phố:</label>
                     <select
                         className="form-select"
-                        style={{ width: "180px" }}
+                        style={{ width: "180px", height: "40px"}}
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                     >
@@ -83,7 +94,10 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Địa chỉ:</label>
-                    <input type="text" className="form-control" style={{ width: "550px" }} placeholder="Địa chỉ" value={location} onChange={(e) => setLocation(e.target.value)} />
+                    <div>
+                        <input type="text" className="form-control" style={{ width: "550px" }} placeholder="Địa chỉ" value={location} onChange={(e) => setLocation(e.target.value)} />
+                        {errors.location && <div className="text-danger">{errors.location}</div>}
+                    </div>
                 </div>
             </div>
             <div className="form-section">

@@ -38,6 +38,7 @@ input {
 }
 
 .history {
+    height: 100%;
     grid-column: span 2;
     padding: 20px;
     border-radius: 12px;
@@ -45,6 +46,11 @@ input {
     box-shadow: 0 12px 20px -4px rgba(0, 0, 0, 0.15),
             0 6px 8px -3px rgba(0, 0, 0, 0.07);
 
+}
+
+.history .table-container {
+    height: 50vh;
+    overflow: auto;
 }
 
 /* .profile-section .info-wrapper {

@@ -24,7 +24,7 @@ const Header: React.FC = props => {
 
                 const resJson = await response.json();
                 const result = resJson.result;
-                setUserName(result.email);
+                setUserName(result.fullName);
             } catch (error) {
                 console.error("Error fetching user info:", error);
             }

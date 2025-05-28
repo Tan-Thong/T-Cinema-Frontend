@@ -40,3 +40,5 @@ export async function getSeatsByRoomId(roomId: number): Promise<SeatModel[]> {
 
     return result;
 }
+
+

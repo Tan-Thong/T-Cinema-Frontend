@@ -73,7 +73,7 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
             userId: myInfo.email,
             showtimeId: showtime.showtimeId,
             seatIds: selectedSeats.map(seat => seat.seatId),
-            totalPrice: selectedSeats.length * 120000,
+            totalPrice: totalPrice,
             paymentMethod: "VNPAY"
         };
 
@@ -107,9 +107,7 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
             case "STANDARD":
                 return 80000;
             case "VIP":
-                return 120000;
-            case "COUPLE":
-                return 150000;
+                return 100000;
             default:
                 return 0;
         }

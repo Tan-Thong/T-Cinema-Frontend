@@ -11,8 +11,8 @@ function Navbar() {
     return (
         <nav className="nav">
             <div className="logo-wrapper">
-                <img src="/images/profiles/avatar.jpg" alt="" />
-                <h5>Xin chào, Tấn Thông</h5>
+                <img src="/images/profiles/profile.png" alt="" />
+                <h5>Xin chào</h5>
             </div>
             <div className="action-wrapper">
                 <div className="action-item"><Link to="movies">Quản lý phim</Link></div>

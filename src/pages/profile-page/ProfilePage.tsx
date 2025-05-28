@@ -4,7 +4,7 @@ import "./profilePage.css"
 import UserModel from "../../models/UserModel";
 import { getMyInfo } from "../../api/UserAPI";
 import BookingModel from "../../models/BookingModel";
-import { getBookings } from "../../api/BookingAPI";
+import { getBookings, getBookingsByUseId } from "../../api/BookingAPI";
 
 const ProfilePage: React.FC = () => {
     const navigate = useNavigate();
@@ -26,8 +26,6 @@ const ProfilePage: React.FC = () => {
     };
 
     useEffect(() => {
-        getBookings().then(setBookings).catch()
-
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem("token");
@@ -61,6 +59,15 @@ const ProfilePage: React.FC = () => {
     }, []);
 
 
+    useEffect(() => {
+        if (myInfo?.userId) {
+            getBookingsByUseId(myInfo.userId)
+                .then(setBookings)
+                .catch(error => console.error(error));
+        }
+    }, [myInfo]);
+
+
     return (
         <div className="profile-wrapper">
             <div className="profile-content">
@@ -70,11 +77,11 @@ const ProfilePage: React.FC = () => {
                         <div className="info-wrapper">
                             <div className="info-section mb-4">
                                 <p className="label mb-2"><b>HỌ TÊN:</b></p>
-                                <input type="text" value={"Lê Văn Tấn Thông"} readOnly />
+                                <input type="text" value={myInfo?.fullName} readOnly />
                             </div>
                             <div className="info-section mb-4">
                                 <p className="label mb-2"><b>SỐ ĐIỆN THOẠI:</b></p>
-                                <input type="text" value={"0348807764"} readOnly />
+                                <input type="text" value={myInfo?.phoneNumber} readOnly />
                             </div>
                             <div className="info-section mb-4">
                                 <p className="label mb-2"><b>EMAIL:</b></p>
@@ -82,7 +89,7 @@ const ProfilePage: React.FC = () => {
                             </div>
                             <div className="info-section mb-4">
                                 <p className="label mb-2"><b>MẬT KHẨU:</b></p>
-                                <input type="password" value={"oooooooooo"} readOnly />
+                                <input type="password" value={myInfo?.password || "oooooooooo"} readOnly />
                             </div>
                         </div>
 

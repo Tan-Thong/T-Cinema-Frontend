@@ -23,6 +23,7 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
     const [movieId, setMovieId] = useState<number | undefined>();
     const [showDate, setShowDate] = useState("");
     const [showTime, setShowTime] = useState("");
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
         getCinemas().then(
@@ -62,6 +63,7 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setErrors({}); // reset lỗi cũ
 
         const token = localStorage.getItem("token"); // lấy token từ localStorage
 
@@ -88,12 +90,17 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
                 },
                 body: JSON.stringify(jsonData),
             });
+            const data = await response.json();
 
             if (response.ok) {
                 alert(showtime ? "Cập nhật thành công!" : "Thêm mới thành công!");
                 onSubmitDone();
             } else {
-                alert("Lỗi khi gửi dữ liệu.");
+                if (data.code === 1001 && data.result) {
+                    setErrors(data.result); // Gán lỗi từ backend vào state errors
+                } else {
+                    alert(data.message || "Đăng ký thất bại!");
+                }
             }
         } catch (error) {
             console.error("Lỗi khi gửi:", error);
@@ -107,7 +114,8 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
             <div className="form-section">
                 <div className="input-wrapper">
                     <label className="form-label">Rạp:</label>
-                    <select value={cinemaId} onChange={(e) => setCinemaId(Number(e.target.value))}>
+                    <select className="form-select"
+                        style={{ width: "180px", height: "40px" }} value={cinemaId} onChange={(e) => setCinemaId(Number(e.target.value))}>
                         <option value="">-- Chọn rạp --</option>
                         {cinemas.map(cinema => (
                             <option key={cinema.cinemaId} value={cinema.cinemaId}>{cinema.cinemaName}</option>
@@ -118,7 +126,8 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
 
                 <div className="input-wrapper">
                     <label className="form-label">Phòng:</label>
-                    <select value={roomId} onChange={(e) => setRoomId(Number(e.target.value))}>
+                    <select className="form-select"
+                        style={{ width: "180px", height: "40px" }} value={roomId} onChange={(e) => setRoomId(Number(e.target.value))}>
                         <option value="">-- Chọn phòng --</option>
                         {rooms.map(room => (
                             <option key={room.roomId} value={room.roomId}>{room.roomName}</option>
@@ -128,7 +137,8 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
 
                 <div className="input-wrapper">
                     <label className="form-label">Phim:</label>
-                    <select value={movieId} onChange={(e) => setMovieId(Number(e.target.value))}>
+                    <select className="form-select"
+                        style={{ width: "180px", height: "40px" }} value={movieId} onChange={(e) => setMovieId(Number(e.target.value))}>
                         {movies.map(movie => (
                             <option key={movie.movieId} value={movie.movieId}>{movie.title}</option>
                         ))}
@@ -142,7 +152,10 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Suất chiếu:</label>
-                    <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Giờ chiếu" value={showTime} onChange={(e) => setShowTime(e.target.value)} />
+                    <div>
+                        <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Giờ chiếu" value={showTime} onChange={(e) => setShowTime(e.target.value)} />
+                        {errors.showTime && <div className="text-danger">{errors.showTime}</div>}
+                    </div>
                 </div>
             </div>
             <div className="form-section">

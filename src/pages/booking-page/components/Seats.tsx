@@ -5,6 +5,8 @@ import SeatModel from "../../../models/SeatModel";
 import { getSeats, getSeatsByRoomId } from "../../../api/SeatAPI";
 import { getRoomById } from "../../../api/RoomAPI";
 import RoomModel from "../../../models/RoomModel";
+import { getSeatShowtimeByShowtimeId } from "../../../api/SeatShowtimeAPI";
+import SeatShowtimeModel from "../../../models/SeatShowtimeModel";
 
 const seatTypes = [
     { img: "/images/icons/sofa-standard.png", label: "Ghế thường" },
@@ -21,17 +23,19 @@ const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
     const [seats, setSeats] = useState<SeatModel[]>([])
     const [room, setRoom] = useState<RoomModel | null>()
     const [selectedSeats, setSelectedSeats] = useState<SeatModel[]>([]);
+    const [seatShowtimes, setSeatShowtimes] = useState<SeatShowtimeModel[]>([])
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const roomIdNumber = Number(queryParams.get("roomId"))
+    const showtimeIdNumber = Number(queryParams.get("showtimeId"))
 
     const getSeatPrice = (seatType: string): number => {
         switch (seatType.toUpperCase()) {
             case "STANDARD":
                 return 80000;
             case "VIP":
-                return 120000;
+                return 100000;
             default:
                 return 0;
         }
@@ -61,6 +65,8 @@ const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
                 setSeats(seatData);
             }
         )
+
+        getSeatShowtimeByShowtimeId(showtimeIdNumber).then(setSeatShowtimes)
     }, [])
 
     return (
@@ -97,21 +103,35 @@ const Seats: React.FC<SeatsProps> = ({ onSeatSelect }) => {
 
                             const isSelected = selectedSeats.some(s => s.seatId === seat.seatId);
 
+                            const seatShowtime = seatShowtimes.find(
+                                s => s.seat.seatId === seat.seatId && s.showtime.showtimeId === showtimeIdNumber
+                            );
+
+                            const isBooked = seatShowtime?.seatStatus === "BOOKED";
+
+                            let seatImg = "";
+                            if (isBooked) {
+                                seatImg = "/images/icons/sofa-disable.png";
+                            } else if (isSelected) {
+                                seatImg = "/images/icons/sofa-checked.png";
+                            } else {
+                                seatImg = `/images/icons/sofa-${seat.seatType.toLowerCase()}.png`;
+                            }
+
                             return (
                                 <img
                                     key={seat.seatId}
                                     className="seat-icon mx-1"
-                                    src={
-                                        isSelected
-                                            ? "/images/icons/sofa-checked.png"
-                                            : `/images/icons/sofa-${seat.seatType.toLowerCase()}.png`
-                                    }
+                                    src={seatImg}
                                     alt={`Seat ${seat.seatRow}${seat.seatColumn}`}
                                     title={`Ghế ${seat.seatRow}${seat.seatColumn} - ${getSeatPrice(seat.seatType).toLocaleString()}đ`}
-                                    onClick={() => handleSelectSeat(seat)}
-                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                        if (!isBooked) handleSelectSeat(seat);
+                                    }}
+                                    style={{ cursor: isBooked ? "not-allowed" : "pointer"}}
                                 />
                             );
+
                         })}
                     </div>
                 );

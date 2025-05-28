@@ -13,6 +13,7 @@ type RoomFormProps = {
 function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
     const [cinemas, setCinemas] = useState<CinemaModel[]>([]);
     const token = localStorage.getItem("token");
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
         getCinemas().then(
@@ -51,6 +52,7 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setErrors({}); // reset lỗi cũ
 
         const jsonData = {
             roomName,
@@ -72,12 +74,17 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
                 },
                 body: JSON.stringify(jsonData),
             });
+            const data = await response.json();
 
             if (response.ok) {
                 alert(room ? "Cập nhật thành công!" : "Thêm mới thành công!");
                 onSubmitDone();
             } else {
-                alert("Lỗi khi gửi dữ liệu.");
+                if (data.code === 1001 && data.result) {
+                    setErrors(data.result); // Gán lỗi từ backend vào state errors
+                } else {
+                    alert(data.message || "Đăng ký thất bại!");
+                }
             }
         } catch (error) {
             console.error("Lỗi khi gửi:", error);
@@ -90,13 +97,16 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
             <div className="form-section">
                 <div className="input-wrapper">
                     <label className="form-label">Tên phòng:</label>
-                    <input type="text" className="form-control" style={{ width: "300px" }} placeholder="Tên phòng" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
+                    <div>
+                        <input type="text" className="form-control" style={{ width: "300px" }} placeholder="Tên phòng" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
+                        {errors.roomName && <div className="text-danger">{errors.roomName}</div>}
+                    </div>
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Rạp:</label>
                     <select
                         className="form-select"
-                        style={{ width: "180px" }}
+                        style={{ width: "180px", height: "40px" }}
                         value={cinema?.cinemaId} onChange={(e) => setCinemaId(Number(e.target.value))}
                     >
                         {
@@ -111,7 +121,7 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
                     <label className="form-label">Loại phòng:</label>
                     <select
                         className="form-select"
-                        style={{ width: "80px" }}
+                        style={{ width: "80px" , height: "40px"}}
                         value={roomType} onChange={(e) => setRoomType(Number(e.target.value))}
                     >
                         <option value="1">2D</option>
@@ -120,11 +130,17 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Số hàng ghế:</label>
-                    <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Số hàng" value={row} onChange={(e) => setRow(Number(e.target.value))} />
+                    <div>
+                        <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Số hàng" value={row} onChange={(e) => setRow(Number(e.target.value))} />
+                        {errors.row && <div className="text-danger">{errors.row}</div>}
+                    </div>
                 </div>
                 <div className="input-wrapper">
                     <label className="form-label">Số cột ghế:</label>
-                    <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Số cột" value={column} onChange={(e) => setColumn(Number(e.target.value))} />
+                    <div>
+                        <input type="text" className="form-control" style={{ width: "100px" }} placeholder="Số cột" value={column} onChange={(e) => setColumn(Number(e.target.value))} />
+                        {errors.column && <div className="text-danger">{errors.column}</div>}
+                    </div>
                 </div>
             </div>
             <div className="form-section">
