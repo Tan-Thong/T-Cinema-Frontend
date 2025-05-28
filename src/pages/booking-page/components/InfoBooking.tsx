@@ -69,38 +69,27 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
             return;
         }
 
-        const bookingRequest = {
-            userId: myInfo.email,
-            showtimeId: showtime.showtimeId,
-            seatIds: selectedSeats.map(seat => seat.seatId),
-            totalPrice: totalPrice,
-            paymentMethod: "VNPAY"
-        };
-
-        console.log("📤 Sending booking data:", bookingRequest);
+        const orderId = `order-${Date.now()}`;
+        const amount = totalPrice;
 
         try {
-            const response = await fetch("http://localhost:8080/bookings", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(bookingRequest)
-            });
-
-            if (!response.ok) {
-                throw new Error("Đặt vé thất bại");
-            }
-
+            const response = await fetch(`http://localhost:8080/payments/create?orderId=${orderId}&amount=${amount}`);
             const data = await response.json();
-            alert("Đặt vé thành công!");
-            console.log("Booking created:", data);
+            const paymentUrl = data.paymentUrl;
+
+            // Lưu tạm các thông tin để sử dụng sau khi thanh toán
+            sessionStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
+            sessionStorage.setItem("showtimeId", showtime.showtimeId.toString());
+            sessionStorage.setItem("totalPrice", totalPrice.toString());
+
+            // Chuyển hướng sang VNPay
+            window.location.href = paymentUrl;
         } catch (error) {
-            console.error("Lỗi khi đặt vé:", error);
-            alert("Đặt vé thất bại!");
+            console.error("Lỗi khi tạo thanh toán:", error);
+            alert("Không thể tạo thanh toán");
         }
     };
+
 
     const getSeatPrice = (seatType: string): number => {
         switch (seatType.toUpperCase()) {

@@ -116,7 +116,7 @@ const ProfilePage: React.FC = () => {
                                     bookings.map((booking) => (
                                         <tr>
                                             <th>{booking.bookingId}</th>
-                                            <td>{booking.user.email}</td>
+                                            <td>{booking.user.fullName}</td>
                                             <td>{booking.bookingDate}</td>
                                             <td>{booking.totalPrice}</td>
                                             <td><button className="btn btn-primary" onClick={() => openModal(booking)}>Chi tiết</button></td>

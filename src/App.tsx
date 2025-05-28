@@ -14,9 +14,9 @@ import SeatManager from './pages/admin/seat/SeatManager';
 import RoomManager from './pages/admin/room/RoomManager';
 import CinemaManager from './pages/admin/cinema/CinemaManager';
 import ShowtimeManager from './pages/admin/showtime/ShowtimeManager';
-import RequireAdmin from './components/RequireAdmin';
 import QuickTicketPage from './pages/quick-ticket-page/QuickTicketPage';
 import ProfilePage from './pages/profile-page/ProfilePage';
+import PaymentReturnPage from './pages/payment-return-page/PaymentReturnPage';
 
 // Layout chính chứa Header & Footer
 const MainLayout = () => {
@@ -39,20 +39,15 @@ function App() {
           <Route path="/movies" element={<MoviesPage />} />
           <Route path="/movies/:movieId" element={<DetailPage />} />
           <Route path="/quick-ticket" element={<QuickTicketPage />} />
-          <Route path="/showtimes" element={<BookingPage />} />
+          <Route path="/showtimes" element={<BookingPage />}/>
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/payment/return" element={<PaymentReturnPage />} />
         </Route>
 
         {/* Trang login không có Header/Footer */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/admin"
-          element={
-            <RequireAdmin>
-              <AdminPage />
-            </RequireAdmin>
-          }
-        >
+        <Route path="/admin" element={<AdminPage />}>
           <Route path="movies" element={<MovieManager />} />
           <Route path="cinemas" element={<CinemaManager />} />
           <Route path="showtimes" element={<ShowtimeManager />} />
