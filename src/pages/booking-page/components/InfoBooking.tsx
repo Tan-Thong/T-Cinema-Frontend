@@ -69,26 +69,33 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
             return;
         }
 
-        const orderId = `order-${Date.now()}`;
+        const orderId = encodeURIComponent(`order-${Date.now()}`);
         const amount = totalPrice;
 
         try {
-            const response = await fetch(`http://localhost:8080/payments/create?orderId=${orderId}&amount=${amount}`);
+            const response = await fetch(`http://localhost:8080/payment/create?orderId=${orderId}&amount=${amount}`);
+
+            if (!response.ok) {
+                throw new Error("Không thể tạo URL thanh toán");
+            }
+
             const data = await response.json();
             const paymentUrl = data.paymentUrl;
 
-            // Lưu tạm các thông tin để sử dụng sau khi thanh toán
+            // Lưu tạm thông tin để dùng sau khi thanh toán thành công
             sessionStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
             sessionStorage.setItem("showtimeId", showtime.showtimeId.toString());
             sessionStorage.setItem("totalPrice", totalPrice.toString());
+            sessionStorage.setItem("userEmail", myInfo.email);
 
-            // Chuyển hướng sang VNPay
+            // Chuyển hướng người dùng sang trang thanh toán VNPay
             window.location.href = paymentUrl;
         } catch (error) {
             console.error("Lỗi khi tạo thanh toán:", error);
             alert("Không thể tạo thanh toán");
         }
     };
+
 
 
     const getSeatPrice = (seatType: string): number => {
