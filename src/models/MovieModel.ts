@@ -7,14 +7,13 @@ class MovieModel {
     releaseDate : string;
     thumbnailUrl : string;
     bannerUrl : string;
-    classification : string;
     trailerUrl : string;
     movieDescription : string;
     rate : number;
 
     constructor(movieId : number, title : string, country : string,
         director : string, duration : number, releaseDate : string,
-        thumbnailUrl : string, bannerUrl : string, classification : string, trailerUrl : string, movieDescription : string,
+        thumbnailUrl : string, bannerUrl : string, trailerUrl : string, movieDescription : string,
         rate : number) {
             this.movieId = movieId;
             this.title = title;
@@ -24,7 +23,6 @@ class MovieModel {
             this.releaseDate = releaseDate;
             this.thumbnailUrl = thumbnailUrl;
             this.bannerUrl = bannerUrl;
-            this.classification = classification;
             this.trailerUrl = trailerUrl;
             this.movieDescription = movieDescription;
             this.rate = rate;

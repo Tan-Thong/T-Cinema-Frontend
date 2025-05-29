@@ -38,7 +38,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
           <Route path="/movies/:movieId" element={<DetailPage />} />
-          <Route path="/quick-ticket" element={<QuickTicketPage />} />
+          {/* <Route path="/quick-ticket" element={<QuickTicketPage />} /> */}
           <Route path="/showtimes" element={<BookingPage />}/>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/payment/return" element={<PaymentReturnPage />} />

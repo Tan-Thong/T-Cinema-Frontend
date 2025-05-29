@@ -14,7 +14,6 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
     const [duration, setDuration] = useState("0");
     const [country, setCountry] = useState("");
     const [director, setDirector] = useState("");
-    const [classification, setClassification] = useState("");
     const [rate, setRate] = useState("");
     const [description, setDescription] = useState("");
     const [trailer, setTrailer] = useState("");
@@ -48,7 +47,6 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
             setDuration(movie.duration.toString());
             setCountry(movie.country);
             setDirector(movie.director);
-            setClassification(movie.classification);
             setRate(movie.rate.toString());
             setDescription(movie.movieDescription);
             setTrailer(movie.trailerUrl);
@@ -63,7 +61,6 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
             setDuration("0");
             setCountry("");
             setDirector("");
-            setClassification("");
             setRate("");
             setDescription("");
             setTrailer("");
@@ -85,7 +82,6 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
             rate: parseFloat(rate),
             country,
             director,
-            classification,
             movieDescription: description,
             trailerUrl: trailer,
         };
@@ -146,12 +142,12 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
                     <input type="text" className="form-control" placeholder="Trailer url" value={trailer} onChange={(e) => setTrailer(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Độ tuổi</label>
-                    <input type="text" className="form-control" placeholder="Độ tuổi" value={classification} onChange={(e) => setClassification(e.target.value)} />
-                </div>
-                <div className="mb-3">
                     <label className="form-label">Đánh giá</label>
                     <input type="text" className="form-control" placeholder="Đánh giá" value={rate} onChange={(e) => setRate(e.target.value)} />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Thời lượng</label>
+                    <input type="text" className="form-control" placeholder="Thời lượng" value={duration} onChange={(e) => setDuration(e.target.value)} />
                 </div>
             </div>
             <div>
@@ -164,10 +160,6 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
                     <input type="date" className="form-control" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Thời lượng</label>
-                    <input type="text" className="form-control" placeholder="Thời lượng" value={duration} onChange={(e) => setDuration(e.target.value)} />
-                </div>
-                <div className="mb-3">
                     <label className="form-label">Quốc gia</label>
                     <input type="text" className="form-control" placeholder="Quốc gia" value={country} onChange={(e) => setCountry(e.target.value)} />
                 </div>
@@ -177,7 +169,7 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Mô tả</label>
-                    <textarea className="form-control" rows={7} value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                    <textarea className="form-control" rows={8} value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                 </div>
                 <button className="btn btn-success mb-3" style={{ width: "100%", marginTop: "auto", height: "40px"}} type="submit">Xác nhận</button>
                 <button className="btn btn-secondary" style={{ width: "100%", marginTop: "auto", height: "40px"}} type="button" onClick={onCancel}>Hủy</button>

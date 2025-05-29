@@ -56,7 +56,6 @@ function MovieTable({ onEdit, refreshSignal }: MovieTableProps) {
                         <th scope="col">Thời lượng</th>
                         <th scope="col">Quốc gia</th>
                         <th scope="col">Đạo diễn</th>
-                        <th scope="col">Độ tuổi</th>
                         <th scope="col">Đánh giá</th>
                         <th scope="col">Trailer</th>
                         <th scope="col">Mô tả</th>
@@ -75,7 +74,6 @@ function MovieTable({ onEdit, refreshSignal }: MovieTableProps) {
                                 <td>{movie.duration} phút</td>
                                 <td>{movie.country}</td>
                                 <td>{movie.director}</td>
-                                <td>{movie.classification}</td>
                                 <td>{movie.rate}</td>
                                 <td>{movie.trailerUrl}</td>
                                 <td>{movie.movieDescription}</td>
