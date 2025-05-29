@@ -32,7 +32,7 @@ const QuickTicketPage: React.FC = (props) => {
                             movies.map((movie) => (
                                 <div className="movie-item">
                                     <div className="thumbnail-wrapper">
-                                        <img className="thumbnail" src={`http://localhost:8080/${movie.thumbnailUrl}`} alt="" />
+                                        <img className="thumbnail" src={`https://t-cinema-backend.onrender.com/${movie.thumbnailUrl}`} alt="" />
                                     </div>
                                     <div className="info">
                                         <p className="info-title">{movie.title}</p>

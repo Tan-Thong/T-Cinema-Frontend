@@ -4,7 +4,7 @@ import MyRequest from "./MyRequest";
 
 export async function getSeatShowtimes(): Promise<SeatShowtimeModel[]> {
     const result: SeatShowtimeModel[] = [];
-    const endPoint: string = "http://localhost:8080/seat-showtime";
+    const endPoint: string = "https://t-cinema-backend.onrender.com/seat-showtime";
 
     const response = await MyRequest(endPoint);
     const myResponse = response.result;
@@ -24,7 +24,7 @@ export async function getSeatShowtimes(): Promise<SeatShowtimeModel[]> {
 
 export async function getSeatShowtimeByShowtimeId(showtimeId: number): Promise<SeatShowtimeModel[]> {
     const result: SeatShowtimeModel[] = [];
-    const endPoint: string = `http://localhost:8080/seat-showtime/${showtimeId}/seats`;
+    const endPoint: string = `https://t-cinema-backend.onrender.com/seat-showtime/${showtimeId}/seats`;
 
     const response = await MyRequest(endPoint);
     const myResponse = response.result;
@@ -43,7 +43,7 @@ export async function getSeatShowtimeByShowtimeId(showtimeId: number): Promise<S
 }
 
 export async function holdSeat(seatId: number, showtimeId: number) {
-    const response = await fetch("http://localhost:8080/seat-showtime/hold", {
+    const response = await fetch("https://t-cinema-backend.onrender.com/seat-showtime/hold", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ seatId, showtimeId }),

@@ -25,7 +25,7 @@ function RoomTable({ onEdit, refreshSignal }: RoomTableProps) {
         if (!confirm) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/rooms/${roomId}`, {
+            const response = await fetch(`https://t-cinema-backend.onrender.com/rooms/${roomId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`

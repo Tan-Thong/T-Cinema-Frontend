@@ -33,7 +33,7 @@ const DetailPage: React.FC = () => {
                     <div className="blur-left">
                         <img className="" src="./../images/banners/blur-left.png" />
                     </div>
-                    <img className="banner" src={`http://localhost:8080/${movie?.bannerUrl}`} alt="" />
+                    <img className="banner" src={`https://t-cinema-backend.onrender.com/${movie?.bannerUrl}`} alt="" />
                     <div className="blur-right">
                         <img className="" src="./../images/banners/blur-right.png" />
                     </div>
@@ -57,7 +57,7 @@ const DetailPage: React.FC = () => {
 
             <div className="movie-detail-content">
                 <div className="movie-detail">
-                    <img src={`http://localhost:8080/${movie?.thumbnailUrl}`} alt="" />
+                    <img src={`https://t-cinema-backend.onrender.com/${movie?.thumbnailUrl}`} alt="" />
                     <div className="detail">
                         <div className="detail-title d-flex gap-2 align-items-center">
                             <p className="text-black title">{movie?.title}</p>

@@ -30,7 +30,7 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const response = await fetch("http://localhost:8080/users/myInfo", {
+                const response = await fetch("https://t-cinema-backend.onrender.com/users/myInfo", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
         const amount = totalPrice;
 
         try {
-            const response = await fetch(`http://localhost:8080/payment/create?orderId=${orderId}&amount=${amount}`);
+            const response = await fetch(`https://t-cinema-backend.onrender.com/payment/create?orderId=${orderId}&amount=${amount}`);
 
             if (!response.ok) {
                 throw new Error("Không thể tạo URL thanh toán");
@@ -118,7 +118,7 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
         <div className="info-booking">
             <div className="card shadow-sm p-3 bg-light text-dark">
                 <img
-                    src={`http://localhost:8080/${movie?.thumbnailUrl}`}
+                    src={`https://t-cinema-backend.onrender.com/${movie?.thumbnailUrl}`}
                     alt="Interstellar"
                     className="card-img-top rounded"
                 />

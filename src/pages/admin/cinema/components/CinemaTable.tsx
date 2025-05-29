@@ -23,7 +23,7 @@ function CinemaTable({ onEdit, refreshSignal }: CinemaTableProps) {
         if (!confirm) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/cinemas/${cinemaId}`, {
+            const response = await fetch(`https://t-cinema-backend.onrender.com/cinemas/${cinemaId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`

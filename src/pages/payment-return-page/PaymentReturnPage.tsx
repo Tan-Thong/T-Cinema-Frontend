@@ -18,7 +18,7 @@ const PaymentReturnPage = () => {
             const createBooking = async () => {
                 try {
                     // Lấy thông tin người dùng
-                    const userInfoResponse = await fetch("http://localhost:8080/users/myInfo", {
+                    const userInfoResponse = await fetch("https://t-cinema-backend.onrender.com/users/myInfo", {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -34,7 +34,7 @@ const PaymentReturnPage = () => {
                         paymentMethod: "VNPAY",
                     };
 
-                    const res = await fetch("http://localhost:8080/bookings", {
+                    const res = await fetch("https://t-cinema-backend.onrender.com/bookings", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

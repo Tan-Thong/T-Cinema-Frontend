@@ -10,7 +10,7 @@ const Header: React.FC = props => {
             if (!token) return; // Nếu không có token thì không gọi API
 
             try {
-                const response = await fetch("http://localhost:8080/users/myInfo", {
+                const response = await fetch("https://t-cinema-backend.onrender.com/users/myInfo", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

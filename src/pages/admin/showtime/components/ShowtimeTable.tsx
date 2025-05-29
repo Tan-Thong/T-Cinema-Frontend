@@ -22,7 +22,7 @@ function ShowtimeTable({ onEdit, refreshSignal }: ShowtimeTableProps) {
         const token = localStorage.getItem("token");
 
         try {
-            const response = await fetch(`http://localhost:8080/showtimes/${showtimeId}`, {
+            const response = await fetch(`https://t-cinema-backend.onrender.com/showtimes/${showtimeId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`

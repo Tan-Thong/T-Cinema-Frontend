@@ -4,7 +4,7 @@ import MyRequest from "./MyRequest";
 export async function getCinemas() : Promise<CinemaModel[]> {
     const result : CinemaModel[] = [];
     // EndPoint
-    const endPoint : string = "http://localhost:8080/cinemas";
+    const endPoint : string = "https://t-cinema-backend.onrender.com/cinemas";
 
     // Call function Request
     const response = await MyRequest(endPoint);

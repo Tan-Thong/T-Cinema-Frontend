@@ -5,7 +5,7 @@ import MyRequest from "./MyRequest";
 export async function getBookings() : Promise<BookingModel[]> {
     const result : BookingModel[] = [];
     // EndPoint
-    const endPoint : string = "http://localhost:8080/bookings";
+    const endPoint : string = "https://t-cinema-backend.onrender.com/bookings";
 
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -32,7 +32,7 @@ export async function getBookings() : Promise<BookingModel[]> {
 export async function getBookingsByUseId(userId : number) : Promise<BookingModel[]> {
     const result : BookingModel[] = [];
     // EndPoint
-    const endPoint : string = `http://localhost:8080/users/${userId}/bookings`;
+    const endPoint : string = `https://t-cinema-backend.onrender.com/users/${userId}/bookings`;
 
     // Call function Request
     const response = await MyRequest(endPoint);

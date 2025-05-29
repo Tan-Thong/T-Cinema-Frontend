@@ -50,8 +50,8 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
             setRate(movie.rate.toString());
             setDescription(movie.movieDescription);
             setTrailer(movie.trailerUrl);
-            setThumbnailPreview(`http://localhost:8080/${movie.thumbnailUrl}`);
-            setBannerPreview(`http://localhost:8080/${movie.bannerUrl}`);
+            setThumbnailPreview(`https://t-cinema-backend.onrender.com/${movie.thumbnailUrl}`);
+            setBannerPreview(`https://t-cinema-backend.onrender.com/${movie.bannerUrl}`);
             setThumbnail(null);
             setBanner(null);
         } else {
@@ -90,7 +90,7 @@ function MovieForm({ movie, onSubmitDone, onCancel }: MovieFormProps) {
         if (thumbnail) formData.append("thumbnail", thumbnail);
         if (banner) formData.append("banner", banner);
 
-        const url = movie ? `http://localhost:8080/movies/${movie.movieId}` : "http://localhost:8080/movies";
+        const url = movie ? `https://t-cinema-backend.onrender.com/movies/${movie.movieId}` : "https://t-cinema-backend.onrender.com/movies";
         const method = movie ? "PUT" : "POST";
 
         try {

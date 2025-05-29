@@ -62,7 +62,7 @@ function RoomForm({ room, onSubmitDone, onCancel }: RoomFormProps) {
             roomType,
         };
         console.log("Submitting:", jsonData);
-        const url = room ? `http://localhost:8080/rooms/${room.roomId}` : "http://localhost:8080/rooms";
+        const url = room ? `https://t-cinema-backend.onrender.com/rooms/${room.roomId}` : "https://t-cinema-backend.onrender.com/rooms";
         const method = room ? "PUT" : "POST";
 
         try {

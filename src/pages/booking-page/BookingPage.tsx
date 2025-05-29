@@ -19,7 +19,7 @@ const BookingPage: React.FC = (props) => {
             return;
         }
 
-        fetch("http://localhost:8080/auth/introspect", {
+        fetch("https://t-cinema-backend.onrender.com/auth/introspect", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token }),

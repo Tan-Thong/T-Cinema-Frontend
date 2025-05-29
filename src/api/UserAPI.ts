@@ -2,7 +2,7 @@ import UserModel from "../models/UserModel";
 import MyRequest from "./MyRequest";
 
 export async function getMyInfo(): Promise<UserModel> {
-    const endPoint: string = "http://localhost:8080/users/myInfo";
+    const endPoint: string = "https://t-cinema-backend.onrender.com/users/myInfo";
 
     const response = await MyRequest(endPoint);
     const myResponse = response.result;

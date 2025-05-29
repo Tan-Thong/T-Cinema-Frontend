@@ -34,7 +34,7 @@ const ProfilePage: React.FC = () => {
                     return;
                 }
 
-                const response = await fetch("http://localhost:8080/users/myInfo", {
+                const response = await fetch("https://t-cinema-backend.onrender.com/users/myInfo", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

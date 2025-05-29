@@ -16,7 +16,7 @@ function LoginPage() {
     const payload = { email, password };
 
     try {
-      const response = await fetch("http://localhost:8080/auth/token", {
+      const response = await fetch("https://t-cinema-backend.onrender.com/auth/token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

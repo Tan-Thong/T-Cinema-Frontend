@@ -3,7 +3,7 @@ import MyRequest from "./MyRequest";
 
 export async function getSeats(): Promise<SeatModel[]> {
     const result: SeatModel[] = [];
-    const endPoint: string = "http://localhost:8080/seats";
+    const endPoint: string = "https://t-cinema-backend.onrender.com/seats";
 
     const response = await MyRequest(endPoint);
 
@@ -22,7 +22,7 @@ export async function getSeats(): Promise<SeatModel[]> {
 
 export async function getSeatsByRoomId(roomId: number): Promise<SeatModel[]> {
     const result: SeatModel[] = [];
-    const endPoint: string = `http://localhost:8080/rooms/${roomId}/seats`;
+    const endPoint: string = `https://t-cinema-backend.onrender.com/rooms/${roomId}/seats`;
 
     const response = await MyRequest(endPoint);
     const myResponse = response.result;

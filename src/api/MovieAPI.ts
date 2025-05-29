@@ -5,7 +5,7 @@ import MyRequest from "./MyRequest";
 export async function findAllMovies() : Promise<Movie[]> {
     const result : Movie[] = [];
     // EndPoint
-    const endPoint : string = "http://localhost:8080/movies";
+    const endPoint : string = "https://t-cinema-backend.onrender.com/movies";
 
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -36,10 +36,10 @@ export async function findAllMovies() : Promise<Movie[]> {
 export async function findMoviesByStatus(status : string) : Promise<Movie[]> {
     const result : Movie[] = [];
     // EndPoint
-    // const endPoint : string = "http://localhost:8080/movies";
+    // const endPoint : string = "https://t-cinema-backend.onrender.com/movies";
     const endPoint : string = status === "showing"
-    ? "http://localhost:8080/movies/showing"
-    : "http://localhost:8080/movies/upcoming";
+    ? "https://t-cinema-backend.onrender.com/movies/showing"
+    : "https://t-cinema-backend.onrender.com/movies/upcoming";
     
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -70,7 +70,7 @@ export async function findMoviesByStatus(status : string) : Promise<Movie[]> {
 export async function findMoviesByIdNot(movieID: number) : Promise<Movie[]> {
     const result : Movie[] = [];
     // EndPoint
-    const endPoint : string = `http://localhost:8080/movies/not/${movieID}`;
+    const endPoint : string = `https://t-cinema-backend.onrender.com/movies/not/${movieID}`;
 
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -100,7 +100,7 @@ export async function findMoviesByIdNot(movieID: number) : Promise<Movie[]> {
 
 export async function findMovieByID(movieID: number): Promise<MovieModel> {
     // Endpoint
-    const endPoint: string = `http://localhost:8080/movies/${movieID}`;
+    const endPoint: string = `https://t-cinema-backend.onrender.com/movies/${movieID}`;
 
     const result : Movie = getDefaultMovie();
 

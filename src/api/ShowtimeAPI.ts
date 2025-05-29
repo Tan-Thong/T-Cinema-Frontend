@@ -4,7 +4,7 @@ import MyRequest from "./MyRequest";
 export async function getShowtime(showtimeId: number): Promise<ShowtimeModel> {
     const result: ShowtimeModel[] = [];
     // EndPoint
-    const endPoint: string = `http://localhost:8080/showtimes/${showtimeId}`;
+    const endPoint: string = `https://t-cinema-backend.onrender.com/showtimes/${showtimeId}`;
 
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -23,7 +23,7 @@ export async function getShowtime(showtimeId: number): Promise<ShowtimeModel> {
 export async function getShowtimes(): Promise<ShowtimeModel[]> {
     const result: ShowtimeModel[] = [];
     // EndPoint
-    const endPoint: string = "http://localhost:8080/showtimes";
+    const endPoint: string = "https://t-cinema-backend.onrender.com/showtimes";
 
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -47,7 +47,7 @@ export async function getShowtimes(): Promise<ShowtimeModel[]> {
 export async function getShowtimesByMovieAndDate(movieId: number, showDate: string): Promise<ShowtimeModel[]> {
     const result: ShowtimeModel[] = [];
     // EndPoint
-    const endPoint: string = `http://localhost:8080/movies/${movieId}/showtimes?showDate=${showDate}`;
+    const endPoint: string = `https://t-cinema-backend.onrender.com/movies/${movieId}/showtimes?showDate=${showDate}`;
 
     // Call function Request
     const response = await MyRequest(endPoint);

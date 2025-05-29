@@ -37,7 +37,7 @@ function CinemaForm({ cinema, onSubmitDone, onCancel }: CinemaFormProps) {
             location
         };
 
-        const url = cinema ? `http://localhost:8080/cinemas/${cinema.cinemaId}` : "http://localhost:8080/cinemas";
+        const url = cinema ? `https://t-cinema-backend.onrender.com/cinemas/${cinema.cinemaId}` : "https://t-cinema-backend.onrender.com/cinemas";
         const method = cinema ? "PUT" : "POST";
 
         try {

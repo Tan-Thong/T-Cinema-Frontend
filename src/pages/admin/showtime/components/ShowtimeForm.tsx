@@ -76,8 +76,8 @@ function ShowtimeForm({ showtime, onSubmitDone, onCancel }: ShowtimeFormProps) {
         };
 
         const url = showtime
-            ? `http://localhost:8080/showtimes/${showtime.showtimeId}`
-            : "http://localhost:8080/showtimes";
+            ? `https://t-cinema-backend.onrender.com/showtimes/${showtime.showtimeId}`
+            : "https://t-cinema-backend.onrender.com/showtimes";
 
         const method = showtime ? "PUT" : "POST";
 

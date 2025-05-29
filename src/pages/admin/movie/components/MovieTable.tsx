@@ -23,7 +23,7 @@ function MovieTable({ onEdit, refreshSignal }: MovieTableProps) {
         if (!confirm) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/movies/${movieId}`, {
+            const response = await fetch(`https://t-cinema-backend.onrender.com/movies/${movieId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -67,8 +67,8 @@ function MovieTable({ onEdit, refreshSignal }: MovieTableProps) {
                         movies.map((movie) => (
                             <tr key={movie.movieId}>
                                 <th scope="row">{movie.movieId}</th>
-                                <td><img src={`http://localhost:8080/${movie?.thumbnailUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
-                                <td><img src={`http://localhost:8080/${movie?.bannerUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
+                                <td><img src={`https://t-cinema-backend.onrender.com/${movie?.thumbnailUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
+                                <td><img src={`https://t-cinema-backend.onrender.com/${movie?.bannerUrl}`} alt="" style={{ height: "250px", borderRadius: "6px" }} /></td>
                                 <td>{movie.title}</td>
                                 <td>{movie.releaseDate}</td>
                                 <td>{movie.duration} phút</td>

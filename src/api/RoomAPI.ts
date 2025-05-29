@@ -4,7 +4,7 @@ import MyRequest from "./MyRequest";
 export async function findAll() : Promise<RoomModel[]> {
     const result : RoomModel[] = [];
     // EndPoint
-    const endPoint : string = "http://localhost:8080/rooms";
+    const endPoint : string = "https://t-cinema-backend.onrender.com/rooms";
 
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -29,7 +29,7 @@ export async function findAll() : Promise<RoomModel[]> {
 export async function getRoomById(roomId: number) : Promise<RoomModel> {
     var result : RoomModel | null;
     // EndPoint
-    const endPoint : string = `http://localhost:8080/rooms/${roomId}`;
+    const endPoint : string = `https://t-cinema-backend.onrender.com/rooms/${roomId}`;
 
     // Call function Request
     const response = await MyRequest(endPoint);
@@ -48,7 +48,7 @@ export async function getRoomById(roomId: number) : Promise<RoomModel> {
 export async function findRoomsByCinemaId(cinemaId: number) : Promise<RoomModel[]> {
     const result : RoomModel[] = [];
     // EndPoint
-    const endPoint : string = `http://localhost:8080/cinemas/${cinemaId}/rooms`;
+    const endPoint : string = `https://t-cinema-backend.onrender.com/cinemas/${cinemaId}/rooms`;
 
     // Call function Request
     const response = await MyRequest(endPoint);
