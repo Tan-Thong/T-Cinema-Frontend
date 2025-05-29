@@ -12,7 +12,7 @@ const Movie: React.FC<MovieInterface> = (props) => {
         <div className="movie-item">
             <a href={`movies/${props.movie.movieId}`} >
                 <div className="thumbnail-wrapper">
-                    <img className="thumbnail" src={`https://t-cinema-backend.onrender.com/${props.movie.thumbnailUrl}`} alt="" />
+                    <img className="thumbnail" src={props.movie.thumbnailUrl} alt="" />
                     <div className="thumbnail-action">
                         <button type="button" className="btn-fill">Mua vé</button>
                         <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowModal(true); }}>Trailer</button>
