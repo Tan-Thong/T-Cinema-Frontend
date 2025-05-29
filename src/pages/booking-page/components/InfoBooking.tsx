@@ -118,7 +118,7 @@ const InfoBooking: React.FC<InfoBookingProps> = ({ selectedSeats }) => {
         <div className="info-booking">
             <div className="card shadow-sm p-3 bg-light text-dark">
                 <img
-                    src={`https://t-cinema-backend.onrender.com/${movie?.thumbnailUrl}`}
+                    src={movie?.thumbnailUrl}
                     alt="Interstellar"
                     className="card-img-top rounded"
                 />
