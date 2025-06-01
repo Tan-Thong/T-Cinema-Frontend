@@ -26,7 +26,7 @@ const MoviesShowing: React.FC<MovieInterface> = (props) => {
                     <div className="movie-wrapper">
                         <div className="buy-ticket">
                             <img
-                                src={`https://t-cinema-backend.onrender.com/${movie?.bannerUrl}`}
+                                src={movie?.bannerUrl}
                                 alt=""
                                 className="thumbnail"
                             />

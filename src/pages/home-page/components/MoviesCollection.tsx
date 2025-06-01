@@ -2,13 +2,24 @@ import { useEffect, useState } from "react";
 import "./moviescollection.css"
 import Movie from "./Movie";
 import MovieModel from "../../../models/MovieModel";
-import { findAllMovies } from "../../../api/MovieAPI";
+import { findAllMovies, findMoviesByStatus } from "../../../api/MovieAPI";
 
 function MoviesCollection() {
     const [movies, setMovies] = useState<MovieModel[]>([]);
 
+    // useEffect(() => {
+    //     findAllMovies().then(
+    //         movieData => {
+    //             setMovies(movieData);
+    //         }
+    //     ).catch(
+
+    //     );
+    // }, []);
+    // const [status, setStatus] = useState("showing")
+
     useEffect(() => {
-        findAllMovies().then(
+        findMoviesByStatus("showing").then(
             movieData => {
                 setMovies(movieData);
             }
